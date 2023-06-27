@@ -7,10 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "airbnb-gradient":
+          "linear-gradient(to right,#E61E4D 0%,#E31C5F 50%,#D70466 100%)",
+      },
       colors: {
         "airbnb-theme-color": "#FF385C",
-        "airbnb-gradient":
-          "radial-gradient( circle at center,#FF385C 0%,#e61e4d 27.5%,#e31c5f 40%,#d70466 57.5%,#bd1e59 75%,#bd1e59 100% )",
       },
     },
   },

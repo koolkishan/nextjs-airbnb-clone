@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export default function FormInput({
   name,
@@ -10,7 +10,7 @@ export default function FormInput({
   name: string;
   type: "text" | "password";
   value: string;
-  setValue: Dispatch;
+  setValue: Dispatch<SetStateAction<string>>;
   placeholder: string;
 }) {
   return (
@@ -20,7 +20,7 @@ export default function FormInput({
       name={name}
       onChange={(e) => setValue(e.target.value)}
       placeholder={placeholder}
-      className=""
+      className="border border-gray-300 px-2 py-4 rounded-md w-full"
     />
   );
 }
