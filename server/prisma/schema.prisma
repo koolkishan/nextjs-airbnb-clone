@@ -17,3 +17,9 @@ model User {
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
+
+model Listing {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
