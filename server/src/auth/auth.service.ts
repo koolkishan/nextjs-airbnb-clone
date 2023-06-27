@@ -1,11 +1,14 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-// @ts-ignore
-// eslint-disable-next-line
+import {
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+} from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { Credentials } from "./Credentials";
 import { PasswordService } from "./password.service";
 import { TokenService } from "./token.service";
 import { UserInfo } from "./UserInfo";
+import { User } from "../user/base/User";
 
 @Injectable()
 export class AuthService {
@@ -47,5 +50,57 @@ export class AuthService {
       accessToken,
       ...user,
     };
+  }
+
+  async signup(credentials: Credentials): Promise<UserInfo> {
+    // Extract the username and password from the body of the request
+    const { username, password } = credentials;
+    // Here we attempt to create a new user
+    const user = await this.userService.create({
+      data: {
+        username,
+        password,
+        roles: ["airbnb-user"],
+      },
+    });
+    // If creating a new user fails throw an error
+    if (!user) {
+      throw new UnauthorizedException("Could not create user");
+    }
+    // Create an access token for the newly created user
+    const accessToken = await this.tokenService.createToken({
+      id: user.id,
+      username,
+      password,
+    });
+    // Return the access token as well as the some details about the user
+    return {
+      accessToken,
+      username: user.username,
+      id: user.id,
+      roles: (user.roles as { roles: string[] }).roles,
+    };
+  }
+
+  async me(authorization: string = ""): Promise<User> {
+    const bearer = authorization.replace(/^Bearer\s/, "");
+    const username = this.tokenService.decodeToken(bearer);
+    const result = await this.userService.findOne({
+      where: { username },
+      select: {
+        createdAt: true,
+        firstName: true,
+        id: true,
+        lastName: true,
+        roles: true,
+        updatedAt: true,
+        username: true,
+      },
+    });
+    if (!result) {
+      throw new NotFoundException(`No resource was found for ${username}`);
+    }
+
+    return result;
   }
 }
