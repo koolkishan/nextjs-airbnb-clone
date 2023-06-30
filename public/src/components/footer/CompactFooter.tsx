@@ -24,11 +24,11 @@ export default function CompactFooter() {
         ))}
       </ul>
       <ul className="flex gap-4 font-medium">
-        <li className="flex items-center gap-2">
+        <li className="flex items-center gap-2 cursor-pointer">
           <FiGlobe /> English (IN)
         </li>
-        <li>$ USD</li>
-        <li className="flex items-center gap-2">
+        <li className="cursor-pointer">$ USD</li>
+        <li className="flex items-center gap-2 cursor-pointer">
           Support & resources <PiCaretUpBold />
         </li>
       </ul>
