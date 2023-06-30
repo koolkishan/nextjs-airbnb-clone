@@ -103,4 +103,16 @@ export class AuthService {
 
     return result;
   }
+
+  async checkUser(email: string) {
+    const userStatus = await this.userService.findOne({
+      where: { username: email },
+      select: { username: true, firstName: true, lastName: true },
+    });
+    if (!userStatus) {
+      throw new NotFoundException(`No resource was found for ${email}`);
+    }
+
+    return userStatus;
+  }
 }

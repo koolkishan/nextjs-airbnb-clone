@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CheckUserValues {
+  email: String!
+}
+
 input Credentials {
   password: String!
   username: String!
@@ -53,6 +57,7 @@ type Mutation {
 type Query {
   _listingsMeta(where: ListingWhereInput): MetaQueryPayload!
   _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  checkUser(CheckUserValues: CheckUserValues!): User!
   listing(where: ListingWhereUniqueInput!): Listing
   listings(orderBy: [ListingOrderByInput!], skip: Float, take: Float, where: ListingWhereInput): [Listing!]!
   me: User!

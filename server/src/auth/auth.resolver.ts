@@ -1,11 +1,11 @@
 import * as common from "@nestjs/common";
 import { Args, Mutation, Query, Resolver, Context } from "@nestjs/graphql";
-import { Request } from "express";
+import { Request, request } from "express";
 import * as gqlACGuard from "../auth/gqlAC.guard";
 import { AuthService } from "./auth.service";
 import { GqlDefaultAuthGuard } from "./gqlDefaultAuth.guard";
 import { UserData } from "./userData.decorator";
-import { LoginArgs } from "./LoginArgs";
+import { CheckUserArgs, LoginArgs } from "./LoginArgs";
 import { UserInfo } from "./UserInfo";
 import { User } from "../user/base/User";
 
@@ -23,6 +23,10 @@ export class AuthResolver {
   @Query(() => User)
   async me(@Context("req") request: Request): Promise<User> {
     return this.authService.me(request.headers.authorization);
+  }
+  @Query(() => User)
+  async checkUser(@Args() args: CheckUserArgs): Promise<User> {
+    return this.authService.checkUser(args.CheckUserValues.email);
   }
 
   @Query(() => UserInfo)
