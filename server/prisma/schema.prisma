@@ -19,7 +19,17 @@ model User {
 }
 
 model Listing {
-  createdAt DateTime @default(now())
-  id        String   @id @default(cuid())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  description    String
+  id             String   @id @default(cuid())
+  locationData   Json
+  locationType   String
+  mapData        Json
+  photos         Json
+  placeAmeneites Json
+  placeSpace     Json
+  placetype      String
+  price          Int
+  title          String
+  updatedAt      DateTime @updatedAt
 }
