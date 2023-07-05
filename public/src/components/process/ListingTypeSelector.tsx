@@ -5,7 +5,8 @@ import React, { useState } from "react";
 
 export default function ListingTypeSelector() {
   const { locationType, setLocationType } = userAppStore();
-  const handleSelection = (type: any) => {
+  const handleSelection = (type: string) => {
+    console.log({ type });
     setLocationType(type);
   };
 
@@ -20,10 +21,9 @@ export default function ListingTypeSelector() {
             <button
               key={type.name}
               className={`flex flex-col font-semibold border border-gray-300 rounded-md p-3 hover:border-gray-950 transition-all duration-300 ${
-                type.name === locationType?.name &&
-                "border-gray-950 bg-slate-100"
+                type.name === locationType && "border-gray-950 bg-slate-100"
               }`}
-              onClick={() => handleSelection(type)}
+              onClick={() => handleSelection(type.name)}
             >
               {type.svgPath}
               <span>{type.name}</span>
