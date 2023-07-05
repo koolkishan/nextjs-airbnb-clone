@@ -5,7 +5,7 @@ import * as gqlACGuard from "../auth/gqlAC.guard";
 import { AuthService } from "./auth.service";
 import { GqlDefaultAuthGuard } from "./gqlDefaultAuth.guard";
 import { UserData } from "./userData.decorator";
-import { CheckUserArgs, LoginArgs } from "./LoginArgs";
+import { CheckUserArgs, LoginArgs, SignupArgs } from "./LoginArgs";
 import { UserInfo } from "./UserInfo";
 import { User } from "../user/base/User";
 
@@ -17,7 +17,7 @@ export class AuthResolver {
     return this.authService.login(args.credentials);
   }
   @Mutation(() => UserInfo)
-  async signup(@Args() args: LoginArgs): Promise<UserInfo> {
+  async signup(@Args() args: SignupArgs): Promise<UserInfo> {
     return this.authService.signup(args.credentials);
   }
   @Query(() => User)

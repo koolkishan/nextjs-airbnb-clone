@@ -6,19 +6,23 @@ export default function FormInput({
   value,
   setValue,
   placeholder,
+  isListing = false,
 }: {
   name: string;
   type: "text" | "password";
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  setValue: Dispatch<SetStateAction<string>> | any;
   placeholder: string;
+  isListing?: boolean;
 }) {
   return (
     <input
       type={type}
       value={value}
       name={name}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) =>
+        isListing ? setValue(name, e.target.value) : setValue(e.target.value)
+      }
       placeholder={placeholder}
       className="border border-gray-300 px-2 py-4 rounded-md w-full"
     />

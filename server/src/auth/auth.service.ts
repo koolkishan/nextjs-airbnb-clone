@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { UserService } from "../user/user.service";
-import { Credentials } from "./Credentials";
+import { Credentials, SignupCredentials } from "./Credentials";
 import { PasswordService } from "./password.service";
 import { TokenService } from "./token.service";
 import { UserInfo } from "./UserInfo";
@@ -52,14 +52,16 @@ export class AuthService {
     };
   }
 
-  async signup(credentials: Credentials): Promise<UserInfo> {
+  async signup(credentials: SignupCredentials): Promise<UserInfo> {
     // Extract the username and password from the body of the request
-    const { username, password } = credentials;
+    const { username, password, firstName, lastName } = credentials;
     // Here we attempt to create a new user
     const user = await this.userService.create({
       data: {
         username,
         password,
+        firstName,
+        lastName,
         roles: ["airbnb-user"],
       },
     });

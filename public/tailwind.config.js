@@ -13,6 +13,11 @@ module.exports = {
       },
       colors: {
         "airbnb-theme-color": "#FF385C",
+        "airbnb-light-black": "#222222",
+        "airbnb-light-gray": "#717171",
+      },
+      gridTemplateRows: {
+        "new-listing": "10vh 80vh 10vh",
       },
     },
   },

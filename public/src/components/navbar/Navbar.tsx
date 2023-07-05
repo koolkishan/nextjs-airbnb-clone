@@ -7,10 +7,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import ScheduleBar from "../common/ScheduleBar";
 import ContextMenu from "../common/ContextMenu";
 import { userAppStore } from "airbnb/store/store";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
-  const { setAuthModal } = userAppStore();
-
+  const router = useRouter();
+  const { setAuthModal, userInfo, setUserInfo } = userAppStore();
   const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
 
   const contextMenuOptions = [
@@ -42,6 +43,59 @@ function Navbar() {
     },
   ];
 
+  const authenticatedContextMenuOptions = [
+    {
+      name: "Messages",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Notifications",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Trips",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Wishlists",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Manage Listings",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Account",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Help",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+      },
+    },
+    {
+      name: "Logout",
+      callBack: () => {
+        setIsContextMenuVisible(false);
+        setUserInfo(null);
+        localStorage.clear();
+      },
+    },
+  ];
+
   const showContextMenu = (e) => {
     e.preventDefault();
     setIsContextMenuVisible(true);
@@ -58,7 +112,10 @@ function Navbar() {
         </div>
         <div className="flex-grow basis-0 ">
           <ul className="flex items-center justify-end gap-6 font-medium">
-            <li className="cursor-pointer">
+            <li
+              className="cursor-pointer"
+              onClick={() => router.push("new-listing")}
+            >
               <span>Airbnb your home</span>
             </li>
             <li className="cursor-pointer">
@@ -70,19 +127,27 @@ function Navbar() {
             >
               <RxHamburgerMenu className="text-lg" />
               <span>
-                <Image
-                  src="/empty-profile.png"
-                  alt="profile"
-                  height={30}
-                  width={30}
-                />
+                {userInfo ? (
+                  <div className="flex justify-center items-center bg-black text-white h-7 w-7 text-sm rounded-full">
+                    {userInfo?.firstName?.split("").shift()?.toUpperCase()}
+                  </div>
+                ) : (
+                  <Image
+                    src="/empty-profile.png"
+                    alt="profile"
+                    height={30}
+                    width={30}
+                  />
+                )}
               </span>
             </li>
           </ul>
         </div>
         {isContextMenuVisible && (
           <ContextMenu
-            options={contextMenuOptions}
+            options={
+              !userInfo ? contextMenuOptions : authenticatedContextMenuOptions
+            }
             cordinates={{
               x: window.innerWidth - 250,
               y: 70,

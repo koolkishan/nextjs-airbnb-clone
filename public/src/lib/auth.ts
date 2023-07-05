@@ -20,11 +20,14 @@ export const login = async (username, password) => {
   return me();
 };
 
-export const signup = async (username, password) => {
+export const signup = async (username, password, firstName, lastName) => {
   const result = (
-    await post(createUrl("/api/signup"), { username, password }).catch(
-      () => null
-    )
+    await post(createUrl("/api/signup"), {
+      username,
+      password,
+      firstName,
+      lastName,
+    }).catch(() => null)
   )?.data;
 
   if (!result) {
@@ -32,4 +35,12 @@ export const signup = async (username, password) => {
   }
   setStoredJwt(result.accessToken);
   return me();
+};
+
+export const checkUser = async (email: string) => {
+  const result = (
+    await post(createUrl("/api/check-user"), { email }).catch(() => null)
+  )?.data;
+  if (!result) return false;
+  return true;
 };

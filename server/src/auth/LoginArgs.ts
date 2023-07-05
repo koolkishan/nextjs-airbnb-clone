@@ -1,10 +1,16 @@
 import { ArgsType, Field } from "@nestjs/graphql";
-import { CheckUserValues, Credentials } from "./Credentials";
+import { CheckUserValues, Credentials, SignupCredentials } from "./Credentials";
 
 @ArgsType()
 export class LoginArgs {
   @Field(() => Credentials, { nullable: false })
   credentials!: Credentials;
+}
+
+@ArgsType()
+export class SignupArgs {
+  @Field(() => Credentials, { nullable: false })
+  credentials!: SignupCredentials;
 }
 
 @ArgsType()

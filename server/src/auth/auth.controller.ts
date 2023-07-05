@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get, Req } from "@nestjs/common";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { AuthService } from "./auth.service";
-import { CheckUserValues, Credentials } from "./Credentials";
+import { CheckUserValues, Credentials, SignupCredentials } from "./Credentials";
 import { UserInfo } from "./UserInfo";
 import { User } from "../user/base/User";
 
@@ -26,7 +26,7 @@ export class AuthController {
     return this.authService.login(body);
   }
   @Post("signup")
-  async signup(@Body() body: Credentials): Promise<UserInfo> {
+  async signup(@Body() body: SignupCredentials): Promise<UserInfo> {
     return this.authService.signup(body);
   }
 }
