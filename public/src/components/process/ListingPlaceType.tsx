@@ -5,7 +5,7 @@ import SharedRoom from "airbnb/svg/lisitngTypes/shared-room";
 import React, { useState } from "react";
 
 export default function ListingPlaceType() {
-  const { placeType, setPlaceType } = userAppStore();
+  const { placetype, setPlaceType } = userAppStore();
   const handleSelection = (place: string) => {
     console.log({ place });
     setPlaceType(place);
@@ -39,7 +39,7 @@ export default function ListingPlaceType() {
           <li
             key={place.title}
             className={`flex border border-gray-300 p-7 justify-between rounded-lg hover:border-gray-500 cursor-pointer ${
-              placeType === place.title && "border-gray-950 bg-slate-100"
+              placetype === place.title && "border-gray-950 bg-slate-100"
             }`}
             onClick={() => handleSelection(place.title)}
           >

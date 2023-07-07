@@ -8,7 +8,7 @@ export interface PlaceSpaceType {
 
 export interface ProcessSlice {
   locationType: any;
-  placeType: any;
+  placetype: any;
   mapData: any;
   locationData: any;
   placeSpace: PlaceSpaceType;
@@ -32,8 +32,8 @@ export interface ProcessSlice {
 export const createProcessSlice: StateCreator<ProcessSlice> = (set, get) => ({
   locationType: undefined,
   setLocationType: (locationType: any) => set({ locationType }),
-  placeType: undefined,
-  setPlaceType: (placeType: any) => set({ placeType }),
+  placetype: undefined,
+  setPlaceType: (placetype: any) => set({ placetype }),
   mapData: undefined,
   setMapData: (mapData: any) => set({ mapData }),
   locationData: undefined,

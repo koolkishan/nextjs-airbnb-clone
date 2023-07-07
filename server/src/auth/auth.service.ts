@@ -63,7 +63,7 @@ export class AuthService {
         password,
         firstName,
         lastName,
-        roles: ["airbnb-user"],
+        roles: ["airbnbUser"],
       },
     });
     // If creating a new user fails throw an error

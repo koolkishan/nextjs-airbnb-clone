@@ -1,9 +1,63 @@
+import { createLisitngAPI } from "airbnb/lib/lisitng";
+import { userAppStore } from "airbnb/store/store";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import Confetti from "react-confetti";
 
 export default function ListingCreated() {
   const router = useRouter();
+
+  const {
+    locationType,
+    placetype,
+    mapData,
+    locationData,
+    placeSpace,
+    placeAmeneites,
+    photos,
+    title,
+    description,
+    price,
+  } = userAppStore();
+  useEffect(() => {
+    console.log({
+      locationType,
+      placetype,
+      mapData,
+      locationData,
+      placeSpace,
+      placeAmeneites,
+      photos,
+      title,
+      description,
+      price,
+    });
+    console.log(typeof placetype);
+    createLisitngAPI({
+      locationType,
+      placetype,
+      mapData,
+      locationData,
+      placeSpace,
+      placeAmeneites,
+      photos,
+      title,
+      description,
+      price,
+    });
+  }, [
+    locationType,
+    placetype,
+    mapData,
+    locationData,
+    placeSpace,
+    placeAmeneites,
+    photos,
+    title,
+    description,
+    price,
+  ]);
+
   return (
     <div className="flex flex-col gap-5 items-center justify-center h-full">
       <div className="flex flex-col gap-2 items-center justify-center">

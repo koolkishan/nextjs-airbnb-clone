@@ -1,8 +1,10 @@
 import { StateCreator } from "zustand";
 
 export interface LisitingsSlice {
+  listings: any;
   isMapView: boolean;
   setMapView: () => void;
+  setListings: (listings: any) => void;
 }
 
 export const createLisitingsSlice: StateCreator<LisitingsSlice> = (
@@ -10,7 +12,11 @@ export const createLisitingsSlice: StateCreator<LisitingsSlice> = (
   get
 ) => ({
   isMapView: false,
+  listings: [],
   setMapView: () => {
     set({ isMapView: !get().isMapView });
+  },
+  setListings: (listings) => {
+    set({ listings });
   },
 });
