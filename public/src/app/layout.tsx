@@ -1,7 +1,10 @@
+import NavigationEvents from "airbnb/components/common/NavigationEvents";
 import "./globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import { Inter } from "next/font/google";
+import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -27,7 +30,12 @@ export default function RootLayout({
         type="text/css"
         precedence="default"
       ></link>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
+      </body>
     </html>
   );
 }

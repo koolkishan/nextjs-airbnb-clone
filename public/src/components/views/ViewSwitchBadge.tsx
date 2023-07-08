@@ -14,7 +14,7 @@ function ViewSwitchBadge() {
           className="flex items-center gap-2 text-sm"
           onClick={() => setMapView()}
         >
-          {isMapView ? (
+          {!isMapView ? (
             <>
               Show Map <BsFillMapFill />
             </>

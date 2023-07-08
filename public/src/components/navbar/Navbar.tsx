@@ -8,10 +8,18 @@ import ScheduleBar from "../common/ScheduleBar";
 import ContextMenu from "../common/ContextMenu";
 import { userAppStore } from "airbnb/store/store";
 import { useRouter } from "next/navigation";
+import Schedule from "../common/Schedule";
 
 function Navbar() {
   const router = useRouter();
-  const { setAuthModal, userInfo, setUserInfo } = userAppStore();
+  const {
+    setAuthModal,
+    userInfo,
+    setUserInfo,
+    setMapView,
+    setInitialView,
+    showScheduleBar,
+  } = userAppStore();
   const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
 
   const contextMenuOptions = [
@@ -102,14 +110,24 @@ function Navbar() {
   };
 
   return (
-    <header className="h-20 border-b border-b-gray-200 w-full ">
-      <div className="h-full flex  items-center justify-between px-20 ">
+    <header
+      className={`w-full flex flex-col justify-center transition-all duration-300
+    ${!showScheduleBar ? "h-20 border-b border-b-gray-200" : "shadow-2xl h-40"}
+    `}
+    >
+      <div className="flex  items-center justify-between px-20 ">
         <div className="flex-grow basis-0 ">
-          <AirBnbLogo />
+          <div
+            className="w-max cursor-pointer"
+            onClick={() => {
+              router.push("/");
+              setInitialView();
+            }}
+          >
+            <AirBnbLogo />
+          </div>
         </div>
-        <div>
-          <ScheduleBar />
-        </div>
+        <div>{!showScheduleBar && <ScheduleBar />}</div>
         <div className="flex-grow basis-0 ">
           <ul className="flex items-center justify-end gap-6 font-medium">
             <li
@@ -157,6 +175,11 @@ function Navbar() {
           />
         )}
       </div>
+      {showScheduleBar && (
+        <div className="flex justify-center">
+          <Schedule />
+        </div>
+      )}
     </header>
   );
 }
