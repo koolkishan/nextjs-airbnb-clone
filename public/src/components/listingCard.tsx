@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function ListingCard({ data }: any) {
-  console.log({ data });
   const router = useRouter();
   return (
     <div

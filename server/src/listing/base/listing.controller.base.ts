@@ -104,15 +104,15 @@ export class ListingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  // @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Listing })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Listing",
-    action: "read",
-    possession: "own",
-  })
+  // @nestAccessControl.UseRoles({
+  //   resource: "Listing",
+  //   action: "read",
+  //   possession: "own",
+  // })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })

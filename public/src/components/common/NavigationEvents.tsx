@@ -5,9 +5,22 @@ import { useEffect } from "react";
 
 export default function NavigationEvents() {
   const pathName = usePathname();
-  const { setInitialView } = userAppStore();
+  const {
+    setInitialView,
+    setCurrentListing,
+    setShowScheduleBar,
+    showScheduleBar,
+  } = userAppStore();
   useEffect(() => {
     setInitialView();
-  }, [pathName, setInitialView]);
+    setCurrentListing(undefined);
+    // if (  showScheduleBar) setShowScheduleBar();
+  }, [
+    pathName,
+    setInitialView,
+    showScheduleBar,
+    setShowScheduleBar,
+    setCurrentListing,
+  ]);
   return null;
 }

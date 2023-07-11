@@ -1,110 +1,92 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { DateRange, Range, RangeKeyDict } from "react-date-range";
+
+import { MdLocationPin } from "react-icons/md";
+import { addDays } from "date-fns";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import Calender from "./Calender";
+import SearchAddress from "../SearchScheduler/SearchAddress";
+import { userAppStore } from "airbnb/store/store";
+import SearchBeds from "../SearchScheduler/SearchBeds";
+import { useRouter } from "next/navigation";
 export default function Schedule() {
-  const TOKEN =
-    "pk.eyJ1Ijoia29vbGtpc2hhbiIsImEiOiJjazV3Zm41cG8wa3I1M2tydnVkcW53b2ZpIn0.mYrXogbdTrWSoJECNR1epg";
-  const searchAddresses = async (query) => {
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json`,
-        {
-          params: {
-            access_token: TOKEN,
-            // types: "address",
-            limit: 5,
-            language: "en-US", // Specify the language for the results
-            // countries: "", // Leave empty to search globally
-          },
-        }
-      );
-      // Process the response and extract the addresses
+  const router = useRouter();
+  const {
+    selectionType,
+    setSelectionType,
+    setShowScheduleBar,
+    showScheduleBar,
+  } = userAppStore();
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
 
-      const addresses = response.data.features.map((feature) => ({
-        address: feature.text,
-        latitude: feature.center[1],
-        longitude: feature.center[0],
-      }));
-      // Do something with the addresses (e.g., update state)
-      setSearchedAddresss(addresses);
-      console.log(addresses);
-    } catch (error) {
-      console.error("Error searching addresses:", error);
+  function formatDate(dateString) {
+    const options = { month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  const handleSearch = () => {
+    setSelectionType(undefined);
+    if (showScheduleBar) {
+      setShowScheduleBar();
     }
+    router.push("/search");
   };
-  const [selected, setSelected] = useState<null | string>(null);
-  const [searchText, setSearchText] = useState("");
-  const [searchedAddresss, setSearchedAddresss] = useState([]);
+
   return (
-    <div className="flex rounded-full border border-gray-300 text-airbnb-light-black">
+    <div className="flex rounded-full border border-gray-300 text-airbnb-light-black relative">
       <div
         className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer relative"
-        onClick={() => setSelected("where")}
+        onClick={() => setSelectionType("where")}
       >
-        <label htmlFor="" className="text-xs font-semibold">
-          Where
-        </label>
-        <input
-          type="text"
-          placeholder="Search Destinations"
-          className="bg-transparent focus:outline-none"
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value);
-            searchAddresses(e.target.value);
-          }}
-        />
-        <div className="absolute w-96 left-0 h-96 top-24 shadow-lg rounded-3xl bg-white">
-          <ul>
-            {searchedAddresss?.map((address, index) => (
-              <li key={index}>{address.address}</li>
-            ))}
-          </ul>
-        </div>
+        <SearchAddress />
       </div>
       <div
-        className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer "
-        onClick={() => setSelected("check-in")}
+        onClick={() => setSelectionType("check-in")}
+        className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer items-center justify-center"
       >
-        <label htmlFor="" className="text-xs font-semibold">
+        <label htmlFor="" className="text-xs font-semibold flex flex-col    ">
           Check in
         </label>
-        <span>13 Jul</span>
-        <DateRange
-          rangeColors={["#262626"]}
-          //   ranges={[value]}
-          date={new Date()}
-          //   onChange={onChange}
-          direction="vertical"
-          showDateDisplay={false}
-          minDate={new Date()}
-          //   disabledDates={disabledDates}
-        />
+        <span>{formatDate(state[0]?.startDate)}</span>
+        {selectionType === "check-in" && (
+          <div className="absolute top-28 left-0 shadow-xl">
+            <Calender state={state} setState={setState} />
+          </div>
+        )}
       </div>
       <div
-        className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer"
-        onClick={() => setSelected("check-out")}
+        className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer items-center justify-center"
+        onClick={() => setSelectionType("check-out")}
       >
         <label htmlFor="" className="text-xs font-semibold">
           Check out
         </label>
-        <span>22 Jul</span>
+        <span>{formatDate(state[0]?.endDate)}</span>
+        {selectionType === "check-out" && (
+          <div className="absolute top-28 left-0 shadow-xl">
+            <Calender state={state} setState={setState} />
+          </div>
+        )}
       </div>
       <div
         className="flex hover:bg-gray-100 justify-between px-4 py-4 pl-7 rounded-full cursor-pointer gap-7"
-        onClick={() => setSelected("who")}
+        onClick={() => setSelectionType("who")}
       >
-        <div className="flex flex-col">
-          <label htmlFor="" className="text-xs font-semibold">
-            Who
-          </label>
-          <span>4 guests</span>
-        </div>
-        <button className="bg-airbnb-theme-color p-3 rounded-full flex items-center justify-center text-white text-lg">
+        <SearchBeds />
+        <button
+          className="bg-airbnb-theme-color p-3 rounded-full flex items-center justify-center text-white text-lg"
+          onClick={handleSearch}
+        >
           <BiSearch />
         </button>
       </div>
