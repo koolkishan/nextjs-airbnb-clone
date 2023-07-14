@@ -11,36 +11,36 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { ListingUpdateManyWithoutWishlistsInput } from "./ListingUpdateManyWithoutWishlistsInput";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserUpdateManyWithoutWishlistsInput } from "./UserUpdateManyWithoutWishlistsInput";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
 class WishlistUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => ListingUpdateManyWithoutWishlistsInput,
+    type: () => ListingWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => ListingUpdateManyWithoutWishlistsInput)
+  @Type(() => ListingWhereUniqueInput)
   @IsOptional()
-  @Field(() => ListingUpdateManyWithoutWishlistsInput, {
+  @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listing?: ListingUpdateManyWithoutWishlistsInput;
+  listing?: ListingWhereUniqueInput;
 
   @ApiProperty({
     required: false,
-    type: () => UserUpdateManyWithoutWishlistsInput,
+    type: () => UserWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => UserUpdateManyWithoutWishlistsInput)
+  @Type(() => UserWhereUniqueInput)
   @IsOptional()
-  @Field(() => UserUpdateManyWithoutWishlistsInput, {
+  @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  user?: UserUpdateManyWithoutWishlistsInput;
+  user?: UserWhereUniqueInput;
 }
 
 export { WishlistUpdateInput as WishlistUpdateInput };

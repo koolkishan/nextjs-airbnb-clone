@@ -27,12 +27,6 @@ import { TripWhereUniqueInput } from "./TripWhereUniqueInput";
 import { TripFindManyArgs } from "./TripFindManyArgs";
 import { TripUpdateInput } from "./TripUpdateInput";
 import { Trip } from "./Trip";
-import { ListingFindManyArgs } from "../../listing/base/ListingFindManyArgs";
-import { Listing } from "../../listing/base/Listing";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
-import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
-import { User } from "../../user/base/User";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -54,11 +48,34 @@ export class TripControllerBase {
   })
   async create(@common.Body() data: TripCreateInput): Promise<Trip> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        listing: {
+          connect: data.listing,
+        },
+
+        user: {
+          connect: data.user,
+        },
+      },
       select: {
         createdAt: true,
         id: true,
+
+        listing: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -82,7 +99,20 @@ export class TripControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        listing: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -107,7 +137,20 @@ export class TripControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        listing: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -137,11 +180,34 @@ export class TripControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          listing: {
+            connect: data.listing,
+          },
+
+          user: {
+            connect: data.user,
+          },
+        },
         select: {
           createdAt: true,
           id: true,
+
+          listing: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -174,7 +240,20 @@ export class TripControllerBase {
         select: {
           createdAt: true,
           id: true,
+
+          listing: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -185,216 +264,5 @@ export class TripControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/listing")
-  @ApiNestedQuery(ListingFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Listing",
-    action: "read",
-    possession: "any",
-  })
-  async findManyListing(
-    @common.Req() request: Request,
-    @common.Param() params: TripWhereUniqueInput
-  ): Promise<Listing[]> {
-    const query = plainToClass(ListingFindManyArgs, request.query);
-    const results = await this.service.findListing(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        description: true,
-        id: true,
-
-        listingCreatedBy: {
-          select: {
-            id: true,
-          },
-        },
-
-        locationData: true,
-        locationType: true,
-        mapData: true,
-        photos: true,
-        placeAmeneites: true,
-        placeSpace: true,
-        placetype: true,
-        price: true,
-        title: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/listing")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async connectListing(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listing: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/listing")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async updateListing(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listing: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/listing")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectListing(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listing: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/user")
-  @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async findManyUser(
-    @common.Req() request: Request,
-    @common.Param() params: TripWhereUniqueInput
-  ): Promise<User[]> {
-    const query = plainToClass(UserFindManyArgs, request.query);
-    const results = await this.service.findUser(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        firstName: true,
-        id: true,
-        lastName: true,
-        roles: true,
-        updatedAt: true,
-        username: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/user")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async connectUser(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      user: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/user")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async updateUser(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      user: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/user")
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectUser(
-    @common.Param() params: TripWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      user: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }
