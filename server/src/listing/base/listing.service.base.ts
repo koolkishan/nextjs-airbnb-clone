@@ -47,27 +47,36 @@ export class ListingServiceBase {
     return this.prisma.listing.delete(args);
   }
 
-  async getListingCreatedBy(parentId: string): Promise<User | null> {
+  async findListingCreatedBy(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
     return this.prisma.listing
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .listingCreatedBy();
+      .listingCreatedBy(args);
   }
 
-  async getTrips(parentId: string): Promise<Trip | null> {
+  async findTrips(
+    parentId: string,
+    args: Prisma.TripFindManyArgs
+  ): Promise<Trip[]> {
     return this.prisma.listing
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .trips();
+      .trips(args);
   }
 
-  async getWishlists(parentId: string): Promise<Wishlist | null> {
+  async findWishlists(
+    parentId: string,
+    args: Prisma.WishlistFindManyArgs
+  ): Promise<Wishlist[]> {
     return this.prisma.listing
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .wishlists();
+      .wishlists(args);
   }
 }

@@ -1,7 +1,7 @@
-import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { ListingCreateNestedManyWithoutWishlistsInput } from "./ListingCreateNestedManyWithoutWishlistsInput";
+import { UserCreateNestedManyWithoutWishlistsInput } from "./UserCreateNestedManyWithoutWishlistsInput";
 
 export type WishlistCreateInput = {
-  listing: ListingWhereUniqueInput;
-  user: UserWhereUniqueInput;
+  listing?: ListingCreateNestedManyWithoutWishlistsInput;
+  user?: UserCreateNestedManyWithoutWishlistsInput;
 };

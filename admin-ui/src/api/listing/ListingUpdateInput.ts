@@ -1,11 +1,11 @@
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { UserUpdateManyWithoutListingsInput } from "./UserUpdateManyWithoutListingsInput";
 import { InputJsonValue } from "../../types";
-import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
+import { TripUpdateManyWithoutListingsInput } from "./TripUpdateManyWithoutListingsInput";
+import { WishlistUpdateManyWithoutListingsInput } from "./WishlistUpdateManyWithoutListingsInput";
 
 export type ListingUpdateInput = {
   description?: string;
-  listingCreatedBy?: UserWhereUniqueInput;
+  listingCreatedBy?: UserUpdateManyWithoutListingsInput;
   locationData?: InputJsonValue;
   locationType?: string;
   mapData?: InputJsonValue;
@@ -15,6 +15,6 @@ export type ListingUpdateInput = {
   placetype?: string;
   price?: number;
   title?: string;
-  trips?: TripWhereUniqueInput | null;
-  wishlists?: WishlistWhereUniqueInput | null;
+  trips?: TripUpdateManyWithoutListingsInput;
+  wishlists?: WishlistUpdateManyWithoutListingsInput;
 };

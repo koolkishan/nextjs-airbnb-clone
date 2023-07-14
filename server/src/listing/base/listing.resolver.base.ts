@@ -26,8 +26,11 @@ import { ListingCountArgs } from "./ListingCountArgs";
 import { ListingFindManyArgs } from "./ListingFindManyArgs";
 import { ListingFindUniqueArgs } from "./ListingFindUniqueArgs";
 import { Listing } from "./Listing";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
+import { TripFindManyArgs } from "../../trip/base/TripFindManyArgs";
 import { Trip } from "../../trip/base/Trip";
+import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
 import { Wishlist } from "../../wishlist/base/Wishlist";
 import { ListingService } from "../listing.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -95,25 +98,7 @@ export class ListingResolverBase {
   ): Promise<Listing> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        listingCreatedBy: {
-          connect: args.data.listingCreatedBy,
-        },
-
-        trips: args.data.trips
-          ? {
-              connect: args.data.trips,
-            }
-          : undefined,
-
-        wishlists: args.data.wishlists
-          ? {
-              connect: args.data.wishlists,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -130,25 +115,7 @@ export class ListingResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          listingCreatedBy: {
-            connect: args.data.listingCreatedBy,
-          },
-
-          trips: args.data.trips
-            ? {
-                connect: args.data.trips,
-              }
-            : undefined,
-
-          wishlists: args.data.wishlists
-            ? {
-                connect: args.data.wishlists,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -182,65 +149,62 @@ export class ListingResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => User, {
-    nullable: true,
-    name: "listingCreatedBy",
-  })
+  @graphql.ResolveField(() => [User], { name: "listingCreatedBy" })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
   async resolveFieldListingCreatedBy(
-    @graphql.Parent() parent: Listing
-  ): Promise<User | null> {
-    const result = await this.service.getListingCreatedBy(parent.id);
+    @graphql.Parent() parent: Listing,
+    @graphql.Args() args: UserFindManyArgs
+  ): Promise<User[]> {
+    const results = await this.service.findListingCreatedBy(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Trip, {
-    nullable: true,
-    name: "trips",
-  })
+  @graphql.ResolveField(() => [Trip], { name: "trips" })
   @nestAccessControl.UseRoles({
     resource: "Trip",
     action: "read",
     possession: "any",
   })
   async resolveFieldTrips(
-    @graphql.Parent() parent: Listing
-  ): Promise<Trip | null> {
-    const result = await this.service.getTrips(parent.id);
+    @graphql.Parent() parent: Listing,
+    @graphql.Args() args: TripFindManyArgs
+  ): Promise<Trip[]> {
+    const results = await this.service.findTrips(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Wishlist, {
-    nullable: true,
-    name: "wishlists",
-  })
+  @graphql.ResolveField(() => [Wishlist], { name: "wishlists" })
   @nestAccessControl.UseRoles({
     resource: "Wishlist",
     action: "read",
     possession: "any",
   })
   async resolveFieldWishlists(
-    @graphql.Parent() parent: Listing
-  ): Promise<Wishlist | null> {
-    const result = await this.service.getWishlists(parent.id);
+    @graphql.Parent() parent: Listing,
+    @graphql.Args() args: WishlistFindManyArgs
+  ): Promise<Wishlist[]> {
+    const results = await this.service.findWishlists(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }

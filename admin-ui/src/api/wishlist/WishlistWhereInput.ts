@@ -1,9 +1,9 @@
 import { StringFilter } from "../../util/StringFilter";
-import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { ListingListRelationFilter } from "../listing/ListingListRelationFilter";
+import { UserListRelationFilter } from "../user/UserListRelationFilter";
 
 export type WishlistWhereInput = {
   id?: StringFilter;
-  listing?: ListingWhereUniqueInput;
-  user?: UserWhereUniqueInput;
+  listing?: ListingListRelationFilter;
+  user?: UserListRelationFilter;
 };
