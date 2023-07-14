@@ -13,10 +13,10 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
-  ValidateNested,
-  IsOptional,
   IsString,
+  ValidateNested,
   IsInt,
+  IsOptional,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
@@ -37,15 +37,6 @@ class Listing {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
-    type: () => User,
-  })
-  @ValidateNested()
-  @Type(() => User)
-  @IsOptional()
-  createdBy?: User | null;
-
-  @ApiProperty({
     required: true,
     type: String,
   })
@@ -60,6 +51,14 @@ class Listing {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: true,
+    type: () => User,
+  })
+  @ValidateNested()
+  @Type(() => User)
+  listingCreatedBy?: User;
 
   @ApiProperty({
     required: true,

@@ -1,14 +1,14 @@
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { JsonFilter } from "../../util/JsonFilter";
 import { IntFilter } from "../../util/IntFilter";
 import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
 import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
 
 export type ListingWhereInput = {
-  createdBy?: UserWhereUniqueInput;
   description?: StringFilter;
   id?: StringFilter;
+  listingCreatedBy?: UserWhereUniqueInput;
   locationData?: JsonFilter;
   locationType?: StringFilter;
   mapData?: JsonFilter;

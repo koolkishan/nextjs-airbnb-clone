@@ -5,9 +5,9 @@ import { Wishlist } from "../wishlist/Wishlist";
 
 export type Listing = {
   createdAt: Date;
-  createdBy?: User | null;
   description: string;
   id: string;
+  listingCreatedBy?: User;
   locationData: JsonValue;
   locationType: string;
   mapData: JsonValue;
