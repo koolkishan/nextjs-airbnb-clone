@@ -62,12 +62,12 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => Listing,
+    type: () => [Listing],
   })
   @ValidateNested()
   @Type(() => Listing)
   @IsOptional()
-  listings?: Listing | null;
+  listings?: Array<Listing>;
 
   @ApiProperty({
     required: true,
@@ -78,12 +78,12 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => Trip,
+    type: () => [Trip],
   })
   @ValidateNested()
   @Type(() => Trip)
   @IsOptional()
-  trips?: Trip | null;
+  trips?: Array<Trip>;
 
   @ApiProperty({
     required: true,
@@ -103,12 +103,12 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => Wishlist,
+    type: () => [Wishlist],
   })
   @ValidateNested()
   @Type(() => Wishlist)
   @IsOptional()
-  wishlists?: Wishlist | null;
+  wishlists?: Array<Wishlist>;
 }
 
 export { User as User };

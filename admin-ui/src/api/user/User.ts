@@ -8,10 +8,10 @@ export type User = {
   firstName: string | null;
   id: string;
   lastName: string | null;
-  listings?: Listing | null;
+  listings?: Array<Listing>;
   roles: JsonValue;
-  trips?: Trip | null;
+  trips?: Array<Trip>;
   updatedAt: Date;
   username: string;
-  wishlists?: Wishlist | null;
+  wishlists?: Array<Wishlist>;
 };

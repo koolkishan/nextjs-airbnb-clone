@@ -10,37 +10,37 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
 
 @InputType()
-class UserUpdateManyWithoutListingsInput {
-  @Field(() => [UserWhereUniqueInput], {
+class WishlistUpdateManyWithoutUsersInput {
+  @Field(() => [WishlistWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [UserWhereUniqueInput],
+    type: () => [WishlistWhereUniqueInput],
   })
-  connect?: Array<UserWhereUniqueInput>;
+  connect?: Array<WishlistWhereUniqueInput>;
 
-  @Field(() => [UserWhereUniqueInput], {
+  @Field(() => [WishlistWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [UserWhereUniqueInput],
+    type: () => [WishlistWhereUniqueInput],
   })
-  disconnect?: Array<UserWhereUniqueInput>;
+  disconnect?: Array<WishlistWhereUniqueInput>;
 
-  @Field(() => [UserWhereUniqueInput], {
+  @Field(() => [WishlistWhereUniqueInput], {
     nullable: true,
   })
   @ApiProperty({
     required: false,
-    type: () => [UserWhereUniqueInput],
+    type: () => [WishlistWhereUniqueInput],
   })
-  set?: Array<UserWhereUniqueInput>;
+  set?: Array<WishlistWhereUniqueInput>;
 }
 
-export { UserUpdateManyWithoutListingsInput as UserUpdateManyWithoutListingsInput };
+export { WishlistUpdateManyWithoutUsersInput as WishlistUpdateManyWithoutUsersInput };

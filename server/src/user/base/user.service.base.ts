@@ -72,27 +72,36 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
-  async getListings(parentId: string): Promise<Listing | null> {
+  async findListings(
+    parentId: string,
+    args: Prisma.ListingFindManyArgs
+  ): Promise<Listing[]> {
     return this.prisma.user
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .listings();
+      .listings(args);
   }
 
-  async getTrips(parentId: string): Promise<Trip | null> {
+  async findTrips(
+    parentId: string,
+    args: Prisma.TripFindManyArgs
+  ): Promise<Trip[]> {
     return this.prisma.user
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .trips();
+      .trips(args);
   }
 
-  async getWishlists(parentId: string): Promise<Wishlist | null> {
+  async findWishlists(
+    parentId: string,
+    args: Prisma.WishlistFindManyArgs
+  ): Promise<Wishlist[]> {
     return this.prisma.user
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .wishlists();
+      .wishlists(args);
   }
 }
