@@ -47,25 +47,19 @@ export class WishlistServiceBase {
     return this.prisma.wishlist.delete(args);
   }
 
-  async findListing(
-    parentId: string,
-    args: Prisma.ListingFindManyArgs
-  ): Promise<Listing[]> {
+  async getListing(parentId: string): Promise<Listing | null> {
     return this.prisma.wishlist
-      .findUniqueOrThrow({
+      .findUnique({
         where: { id: parentId },
       })
-      .listing(args);
+      .listing();
   }
 
-  async findUser(
-    parentId: string,
-    args: Prisma.UserFindManyArgs
-  ): Promise<User[]> {
+  async getUser(parentId: string): Promise<User | null> {
     return this.prisma.wishlist
-      .findUniqueOrThrow({
+      .findUnique({
         where: { id: parentId },
       })
-      .user(args);
+      .user();
   }
 }

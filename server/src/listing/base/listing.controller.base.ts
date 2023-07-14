@@ -302,7 +302,20 @@ export class ListingControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        listing: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (results === null) {
@@ -397,7 +410,20 @@ export class ListingControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        listing: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (results === null) {
