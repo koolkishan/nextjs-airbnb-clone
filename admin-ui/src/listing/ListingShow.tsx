@@ -4,8 +4,8 @@ import {
   SimpleShowLayout,
   ShowProps,
   DateField,
-  ReferenceField,
   TextField,
+  ReferenceField,
 } from "react-admin";
 import { USER_TITLE_FIELD } from "../user/UserTitle";
 import { TRIP_TITLE_FIELD } from "../trip/TripTitle";
@@ -16,11 +16,15 @@ export const ListingShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
-        <ReferenceField label="createdBy" source="user.id" reference="User">
-          <TextField source={USER_TITLE_FIELD} />
-        </ReferenceField>
         <TextField label="description" source="description" />
         <TextField label="ID" source="id" />
+        <ReferenceField
+          label="listingCreatedBy"
+          source="user.id"
+          reference="User"
+        >
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="locationData" source="locationData" />
         <TextField label="locationType" source="locationType" />
         <TextField label="mapData" source="mapData" />

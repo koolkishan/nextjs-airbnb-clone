@@ -98,11 +98,9 @@ export class ListingResolverBase {
       data: {
         ...args.data,
 
-        createdBy: args.data.createdBy
-          ? {
-              connect: args.data.createdBy,
-            }
-          : undefined,
+        listingCreatedBy: {
+          connect: args.data.listingCreatedBy,
+        },
 
         trips: args.data.trips
           ? {
@@ -135,11 +133,9 @@ export class ListingResolverBase {
         data: {
           ...args.data,
 
-          createdBy: args.data.createdBy
-            ? {
-                connect: args.data.createdBy,
-              }
-            : undefined,
+          listingCreatedBy: {
+            connect: args.data.listingCreatedBy,
+          },
 
           trips: args.data.trips
             ? {
@@ -188,17 +184,17 @@ export class ListingResolverBase {
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, {
     nullable: true,
-    name: "createdBy",
+    name: "listingCreatedBy",
   })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  async resolveFieldCreatedBy(
+  async resolveFieldListingCreatedBy(
     @graphql.Parent() parent: Listing
   ): Promise<User | null> {
-    const result = await this.service.getCreatedBy(parent.id);
+    const result = await this.service.getListingCreatedBy(parent.id);
 
     if (!result) {
       return null;

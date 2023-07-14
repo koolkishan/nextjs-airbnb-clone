@@ -4,8 +4,8 @@ import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
 import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
 
 export type ListingUpdateInput = {
-  createdBy?: UserWhereUniqueInput | null;
   description?: string;
+  listingCreatedBy?: UserWhereUniqueInput;
   locationData?: InputJsonValue;
   locationType?: string;
   mapData?: InputJsonValue;

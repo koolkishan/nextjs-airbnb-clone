@@ -51,11 +51,9 @@ export class ListingControllerBase {
       data: {
         ...data,
 
-        createdBy: data.createdBy
-          ? {
-              connect: data.createdBy,
-            }
-          : undefined,
+        listingCreatedBy: {
+          connect: data.listingCreatedBy,
+        },
 
         trips: data.trips
           ? {
@@ -71,15 +69,15 @@ export class ListingControllerBase {
       },
       select: {
         createdAt: true,
+        description: true,
+        id: true,
 
-        createdBy: {
+        listingCreatedBy: {
           select: {
             id: true,
           },
         },
 
-        description: true,
-        id: true,
         locationData: true,
         locationType: true,
         mapData: true,
@@ -125,15 +123,15 @@ export class ListingControllerBase {
       ...args,
       select: {
         createdAt: true,
+        description: true,
+        id: true,
 
-        createdBy: {
+        listingCreatedBy: {
           select: {
             id: true,
           },
         },
 
-        description: true,
-        id: true,
         locationData: true,
         locationType: true,
         mapData: true,
@@ -180,15 +178,15 @@ export class ListingControllerBase {
       where: params,
       select: {
         createdAt: true,
+        description: true,
+        id: true,
 
-        createdBy: {
+        listingCreatedBy: {
           select: {
             id: true,
           },
         },
 
-        description: true,
-        id: true,
         locationData: true,
         locationType: true,
         mapData: true,
@@ -244,11 +242,9 @@ export class ListingControllerBase {
         data: {
           ...data,
 
-          createdBy: data.createdBy
-            ? {
-                connect: data.createdBy,
-              }
-            : undefined,
+          listingCreatedBy: {
+            connect: data.listingCreatedBy,
+          },
 
           trips: data.trips
             ? {
@@ -264,15 +260,15 @@ export class ListingControllerBase {
         },
         select: {
           createdAt: true,
+          description: true,
+          id: true,
 
-          createdBy: {
+          listingCreatedBy: {
             select: {
               id: true,
             },
           },
 
-          description: true,
-          id: true,
           locationData: true,
           locationType: true,
           mapData: true,
@@ -327,15 +323,15 @@ export class ListingControllerBase {
         where: params,
         select: {
           createdAt: true,
+          description: true,
+          id: true,
 
-          createdBy: {
+          listingCreatedBy: {
             select: {
               id: true,
             },
           },
 
-          description: true,
-          id: true,
           locationData: true,
           locationType: true,
           mapData: true,

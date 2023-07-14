@@ -47,12 +47,12 @@ export class ListingServiceBase {
     return this.prisma.listing.delete(args);
   }
 
-  async getCreatedBy(parentId: string): Promise<User | null> {
+  async getListingCreatedBy(parentId: string): Promise<User | null> {
     return this.prisma.listing
       .findUnique({
         where: { id: parentId },
       })
-      .createdBy();
+      .listingCreatedBy();
   }
 
   async getTrips(parentId: string): Promise<Trip | null> {

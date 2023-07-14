@@ -22,23 +22,23 @@ model User {
 }
 
 model Listing {
-  createdAt      DateTime  @default(now())
-  createdBy      User?     @relation(fields: [createdBy], references: [id])
-  createdBy      String?   @unique
-  description    String
-  id             String    @id @default(cuid())
-  locationData   Json
-  locationType   String
-  mapData        Json
-  photos         Json
-  placeAmeneites Json
-  placeSpace     Json
-  placetype      String
-  price          Int
-  title          String
-  trips          Trip?
-  updatedAt      DateTime  @updatedAt
-  wishlists      Wishlist?
+  createdAt          DateTime  @default(now())
+  description        String
+  id                 String    @id @default(cuid())
+  listingCreatedBy   User      @relation(fields: [listingCreatedById], references: [id])
+  listingCreatedById String    @unique
+  locationData       Json
+  locationType       String
+  mapData            Json
+  photos             Json
+  placeAmeneites     Json
+  placeSpace         Json
+  placetype          String
+  price              Int
+  title              String
+  trips              Trip?
+  updatedAt          DateTime  @updatedAt
+  wishlists          Wishlist?
 }
 
 model Wishlist {
