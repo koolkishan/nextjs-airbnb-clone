@@ -14,11 +14,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 import { JsonFilter } from "../../util/JsonFilter";
 import { IntFilter } from "../../util/IntFilter";
-import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
+import { TripListRelationFilter } from "../../trip/base/TripListRelationFilter";
+import { WishlistListRelationFilter } from "../../wishlist/base/WishlistListRelationFilter";
 
 @InputType()
 class ListingWhereInput {
@@ -46,15 +46,15 @@ class ListingWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserWhereUniqueInput,
+    type: () => UserListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
+  @Type(() => UserListRelationFilter)
   @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
+  @Field(() => UserListRelationFilter, {
     nullable: true,
   })
-  listingCreatedBy?: UserWhereUniqueInput;
+  listingCreatedBy?: UserListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -157,27 +157,27 @@ class ListingWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => TripWhereUniqueInput,
+    type: () => TripListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => TripWhereUniqueInput)
+  @Type(() => TripListRelationFilter)
   @IsOptional()
-  @Field(() => TripWhereUniqueInput, {
+  @Field(() => TripListRelationFilter, {
     nullable: true,
   })
-  trips?: TripWhereUniqueInput;
+  trips?: TripListRelationFilter;
 
   @ApiProperty({
     required: false,
-    type: () => WishlistWhereUniqueInput,
+    type: () => WishlistListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => WishlistWhereUniqueInput)
+  @Type(() => WishlistListRelationFilter)
   @IsOptional()
-  @Field(() => WishlistWhereUniqueInput, {
+  @Field(() => WishlistListRelationFilter, {
     nullable: true,
   })
-  wishlists?: WishlistWhereUniqueInput;
+  wishlists?: WishlistListRelationFilter;
 }
 
 export { ListingWhereInput as ListingWhereInput };

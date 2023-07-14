@@ -11,30 +11,36 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
-import { ValidateNested } from "class-validator";
+import { ListingCreateNestedManyWithoutTripsInput } from "./ListingCreateNestedManyWithoutTripsInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { UserCreateNestedManyWithoutTripsInput } from "./UserCreateNestedManyWithoutTripsInput";
 
 @InputType()
 class TripCreateInput {
   @ApiProperty({
     required: true,
-    type: () => ListingWhereUniqueInput,
+    type: () => ListingCreateNestedManyWithoutTripsInput,
   })
   @ValidateNested()
-  @Type(() => ListingWhereUniqueInput)
-  @Field(() => ListingWhereUniqueInput)
-  listing!: ListingWhereUniqueInput;
+  @Type(() => ListingCreateNestedManyWithoutTripsInput)
+  @IsOptional()
+  @Field(() => ListingCreateNestedManyWithoutTripsInput, {
+    nullable: true,
+  })
+  listing?: ListingCreateNestedManyWithoutTripsInput;
 
   @ApiProperty({
     required: true,
-    type: () => UserWhereUniqueInput,
+    type: () => UserCreateNestedManyWithoutTripsInput,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @Field(() => UserWhereUniqueInput)
-  user!: UserWhereUniqueInput;
+  @Type(() => UserCreateNestedManyWithoutTripsInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutTripsInput, {
+    nullable: true,
+  })
+  user?: UserCreateNestedManyWithoutTripsInput;
 }
 
 export { TripCreateInput as TripCreateInput };

@@ -14,8 +14,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { ListingListRelationFilter } from "../../listing/base/ListingListRelationFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 
 @InputType()
 class TripWhereInput {
@@ -32,27 +32,27 @@ class TripWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingWhereUniqueInput,
+    type: () => ListingListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => ListingWhereUniqueInput)
+  @Type(() => ListingListRelationFilter)
   @IsOptional()
-  @Field(() => ListingWhereUniqueInput, {
+  @Field(() => ListingListRelationFilter, {
     nullable: true,
   })
-  listing?: ListingWhereUniqueInput;
+  listing?: ListingListRelationFilter;
 
   @ApiProperty({
     required: false,
-    type: () => UserWhereUniqueInput,
+    type: () => UserListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
+  @Type(() => UserListRelationFilter)
   @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
+  @Field(() => UserListRelationFilter, {
     nullable: true,
   })
-  user?: UserWhereUniqueInput;
+  user?: UserListRelationFilter;
 }
 
 export { TripWhereInput as TripWhereInput };

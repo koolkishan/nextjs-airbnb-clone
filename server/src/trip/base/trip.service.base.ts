@@ -47,19 +47,25 @@ export class TripServiceBase {
     return this.prisma.trip.delete(args);
   }
 
-  async getListing(parentId: string): Promise<Listing | null> {
+  async findListing(
+    parentId: string,
+    args: Prisma.ListingFindManyArgs
+  ): Promise<Listing[]> {
     return this.prisma.trip
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .listing();
+      .listing(args);
   }
 
-  async getUser(parentId: string): Promise<User | null> {
+  async findUser(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
     return this.prisma.trip
-      .findUnique({
+      .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .user();
+      .user(args);
   }
 }

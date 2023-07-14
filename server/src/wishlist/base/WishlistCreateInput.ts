@@ -11,30 +11,36 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
-import { ValidateNested } from "class-validator";
+import { ListingCreateNestedManyWithoutWishlistsInput } from "./ListingCreateNestedManyWithoutWishlistsInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { UserCreateNestedManyWithoutWishlistsInput } from "./UserCreateNestedManyWithoutWishlistsInput";
 
 @InputType()
 class WishlistCreateInput {
   @ApiProperty({
     required: true,
-    type: () => ListingWhereUniqueInput,
+    type: () => ListingCreateNestedManyWithoutWishlistsInput,
   })
   @ValidateNested()
-  @Type(() => ListingWhereUniqueInput)
-  @Field(() => ListingWhereUniqueInput)
-  listing!: ListingWhereUniqueInput;
+  @Type(() => ListingCreateNestedManyWithoutWishlistsInput)
+  @IsOptional()
+  @Field(() => ListingCreateNestedManyWithoutWishlistsInput, {
+    nullable: true,
+  })
+  listing?: ListingCreateNestedManyWithoutWishlistsInput;
 
   @ApiProperty({
     required: true,
-    type: () => UserWhereUniqueInput,
+    type: () => UserCreateNestedManyWithoutWishlistsInput,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @Field(() => UserWhereUniqueInput)
-  user!: UserWhereUniqueInput;
+  @Type(() => UserCreateNestedManyWithoutWishlistsInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutWishlistsInput, {
+    nullable: true,
+  })
+  user?: UserCreateNestedManyWithoutWishlistsInput;
 }
 
 export { WishlistCreateInput as WishlistCreateInput };

@@ -1,14 +1,14 @@
 import { StringFilter } from "../../util/StringFilter";
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { UserListRelationFilter } from "../user/UserListRelationFilter";
 import { JsonFilter } from "../../util/JsonFilter";
 import { IntFilter } from "../../util/IntFilter";
-import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
+import { TripListRelationFilter } from "../trip/TripListRelationFilter";
+import { WishlistListRelationFilter } from "../wishlist/WishlistListRelationFilter";
 
 export type ListingWhereInput = {
   description?: StringFilter;
   id?: StringFilter;
-  listingCreatedBy?: UserWhereUniqueInput;
+  listingCreatedBy?: UserListRelationFilter;
   locationData?: JsonFilter;
   locationType?: StringFilter;
   mapData?: JsonFilter;
@@ -18,6 +18,6 @@ export type ListingWhereInput = {
   placetype?: StringFilter;
   price?: IntFilter;
   title?: StringFilter;
-  trips?: TripWhereUniqueInput;
-  wishlists?: WishlistWhereUniqueInput;
+  trips?: TripListRelationFilter;
+  wishlists?: WishlistListRelationFilter;
 };

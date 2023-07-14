@@ -3,8 +3,8 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  ReferenceInput,
-  SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 import { ListingTitle } from "../listing/ListingTitle";
 import { UserTitle } from "../user/UserTitle";
@@ -13,12 +13,22 @@ export const TripEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <ReferenceInput source="listing.id" reference="Listing" label="listing">
-          <SelectInput optionText={ListingTitle} />
-        </ReferenceInput>
-        <ReferenceInput source="user.id" reference="User" label="user">
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
+        <ReferenceArrayInput
+          source="listing"
+          reference="Listing"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ListingTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="user"
+          reference="User"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Edit>
   );

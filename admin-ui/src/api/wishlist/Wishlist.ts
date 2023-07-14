@@ -4,7 +4,7 @@ import { User } from "../user/User";
 export type Wishlist = {
   createdAt: Date;
   id: string;
-  listing?: Listing;
+  listing?: Array<Listing>;
   updatedAt: Date;
-  user?: User;
+  user?: Array<User>;
 };

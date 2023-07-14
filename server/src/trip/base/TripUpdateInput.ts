@@ -11,36 +11,36 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
+import { ListingUpdateManyWithoutTripsInput } from "./ListingUpdateManyWithoutTripsInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { UserUpdateManyWithoutTripsInput } from "./UserUpdateManyWithoutTripsInput";
 
 @InputType()
 class TripUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => ListingWhereUniqueInput,
+    type: () => ListingUpdateManyWithoutTripsInput,
   })
   @ValidateNested()
-  @Type(() => ListingWhereUniqueInput)
+  @Type(() => ListingUpdateManyWithoutTripsInput)
   @IsOptional()
-  @Field(() => ListingWhereUniqueInput, {
+  @Field(() => ListingUpdateManyWithoutTripsInput, {
     nullable: true,
   })
-  listing?: ListingWhereUniqueInput;
+  listing?: ListingUpdateManyWithoutTripsInput;
 
   @ApiProperty({
     required: false,
-    type: () => UserWhereUniqueInput,
+    type: () => UserUpdateManyWithoutTripsInput,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
+  @Type(() => UserUpdateManyWithoutTripsInput)
   @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
+  @Field(() => UserUpdateManyWithoutTripsInput, {
     nullable: true,
   })
-  user?: UserWhereUniqueInput;
+  user?: UserUpdateManyWithoutTripsInput;
 }
 
 export { TripUpdateInput as TripUpdateInput };

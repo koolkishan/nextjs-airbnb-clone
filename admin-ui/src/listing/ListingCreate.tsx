@@ -5,8 +5,8 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
-  ReferenceInput,
-  SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
   NumberInput,
 } from "react-admin";
 
@@ -19,13 +19,14 @@ export const ListingCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="description" multiline source="description" />
-        <ReferenceInput
-          source="listingCreatedBy.id"
+        <ReferenceArrayInput
+          source="listingCreatedBy"
           reference="User"
-          label="listingCreatedBy"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
         <div />
         <TextInput label="locationType" source="locationType" />
         <div />
@@ -35,16 +36,22 @@ export const ListingCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="placetype" source="placetype" />
         <NumberInput step={1} label="price" source="price" />
         <TextInput label="title" source="title" />
-        <ReferenceInput source="trips.id" reference="Trip" label="trips">
-          <SelectInput optionText={TripTitle} />
-        </ReferenceInput>
-        <ReferenceInput
-          source="wishlists.id"
-          reference="Wishlist"
-          label="wishlists"
+        <ReferenceArrayInput
+          source="trips"
+          reference="Trip"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectInput optionText={WishlistTitle} />
-        </ReferenceInput>
+          <SelectArrayInput optionText={TripTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="wishlists"
+          reference="Wishlist"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={WishlistTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );

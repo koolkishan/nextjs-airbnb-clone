@@ -7,7 +7,7 @@ export type Listing = {
   createdAt: Date;
   description: string;
   id: string;
-  listingCreatedBy?: User;
+  listingCreatedBy?: Array<User>;
   locationData: JsonValue;
   locationType: string;
   mapData: JsonValue;
@@ -17,7 +17,7 @@ export type Listing = {
   placetype: string;
   price: number;
   title: string;
-  trips?: Trip | null;
+  trips?: Array<Trip>;
   updatedAt: Date;
-  wishlists?: Wishlist | null;
+  wishlists?: Array<Wishlist>;
 };

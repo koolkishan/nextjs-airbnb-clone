@@ -4,7 +4,6 @@ export type ListingOrderByInput = {
   createdAt?: SortOrder;
   description?: SortOrder;
   id?: SortOrder;
-  listingCreatedById?: SortOrder;
   locationData?: SortOrder;
   locationType?: SortOrder;
   mapData?: SortOrder;
@@ -14,7 +13,5 @@ export type ListingOrderByInput = {
   placetype?: SortOrder;
   price?: SortOrder;
   title?: SortOrder;
-  tripsId?: SortOrder;
   updatedAt?: SortOrder;
-  wishlistsId?: SortOrder;
 };

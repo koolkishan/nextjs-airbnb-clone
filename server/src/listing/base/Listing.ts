@@ -15,8 +15,8 @@ import {
   IsDate,
   IsString,
   ValidateNested,
-  IsInt,
   IsOptional,
+  IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
@@ -54,11 +54,12 @@ class Listing {
 
   @ApiProperty({
     required: true,
-    type: () => User,
+    type: () => [User],
   })
   @ValidateNested()
   @Type(() => User)
-  listingCreatedBy?: User;
+  @IsOptional()
+  listingCreatedBy?: Array<User>;
 
   @ApiProperty({
     required: true,
@@ -129,12 +130,12 @@ class Listing {
 
   @ApiProperty({
     required: false,
-    type: () => Trip,
+    type: () => [Trip],
   })
   @ValidateNested()
   @Type(() => Trip)
   @IsOptional()
-  trips?: Trip | null;
+  trips?: Array<Trip>;
 
   @ApiProperty({
     required: true,
@@ -146,12 +147,12 @@ class Listing {
 
   @ApiProperty({
     required: false,
-    type: () => Wishlist,
+    type: () => [Wishlist],
   })
   @ValidateNested()
   @Type(() => Wishlist)
   @IsOptional()
-  wishlists?: Wishlist | null;
+  wishlists?: Array<Wishlist>;
 }
 
 export { Listing as Listing };

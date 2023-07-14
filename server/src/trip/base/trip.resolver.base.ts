@@ -26,7 +26,9 @@ import { TripCountArgs } from "./TripCountArgs";
 import { TripFindManyArgs } from "./TripFindManyArgs";
 import { TripFindUniqueArgs } from "./TripFindUniqueArgs";
 import { Trip } from "./Trip";
+import { ListingFindManyArgs } from "../../listing/base/ListingFindManyArgs";
 import { Listing } from "../../listing/base/Listing";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { TripService } from "../trip.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -88,17 +90,7 @@ export class TripResolverBase {
   async createTrip(@graphql.Args() args: CreateTripArgs): Promise<Trip> {
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        listing: {
-          connect: args.data.listing,
-        },
-
-        user: {
-          connect: args.data.user,
-        },
-      },
+      data: args.data,
     });
   }
 
@@ -113,17 +105,7 @@ export class TripResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          listing: {
-            connect: args.data.listing,
-          },
-
-          user: {
-            connect: args.data.user,
-          },
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -155,42 +137,42 @@ export class TripResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Listing, {
-    nullable: true,
-    name: "listing",
-  })
+  @graphql.ResolveField(() => [Listing], { name: "listing" })
   @nestAccessControl.UseRoles({
     resource: "Listing",
     action: "read",
     possession: "any",
   })
   async resolveFieldListing(
-    @graphql.Parent() parent: Trip
-  ): Promise<Listing | null> {
-    const result = await this.service.getListing(parent.id);
+    @graphql.Parent() parent: Trip,
+    @graphql.Args() args: ListingFindManyArgs
+  ): Promise<Listing[]> {
+    const results = await this.service.findListing(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => User, {
-    nullable: true,
-    name: "user",
-  })
+  @graphql.ResolveField(() => [User], { name: "user" })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  async resolveFieldUser(@graphql.Parent() parent: Trip): Promise<User | null> {
-    const result = await this.service.getUser(parent.id);
+  async resolveFieldUser(
+    @graphql.Parent() parent: Trip,
+    @graphql.Args() args: UserFindManyArgs
+  ): Promise<User[]> {
+    const results = await this.service.findUser(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return result;
+
+    return results;
   }
 }

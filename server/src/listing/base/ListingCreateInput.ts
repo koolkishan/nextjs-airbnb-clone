@@ -11,14 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, ValidateNested, IsInt, IsOptional } from "class-validator";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { IsString, ValidateNested, IsOptional, IsInt } from "class-validator";
+import { UserCreateNestedManyWithoutListingsInput } from "./UserCreateNestedManyWithoutListingsInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
+import { TripCreateNestedManyWithoutListingsInput } from "./TripCreateNestedManyWithoutListingsInput";
+import { WishlistCreateNestedManyWithoutListingsInput } from "./WishlistCreateNestedManyWithoutListingsInput";
 
 @InputType()
 class ListingCreateInput {
@@ -32,12 +32,15 @@ class ListingCreateInput {
 
   @ApiProperty({
     required: true,
-    type: () => UserWhereUniqueInput,
+    type: () => UserCreateNestedManyWithoutListingsInput,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @Field(() => UserWhereUniqueInput)
-  listingCreatedBy!: UserWhereUniqueInput;
+  @Type(() => UserCreateNestedManyWithoutListingsInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutListingsInput, {
+    nullable: true,
+  })
+  listingCreatedBy?: UserCreateNestedManyWithoutListingsInput;
 
   @ApiProperty({
     required: true,
@@ -108,27 +111,27 @@ class ListingCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TripWhereUniqueInput,
+    type: () => TripCreateNestedManyWithoutListingsInput,
   })
   @ValidateNested()
-  @Type(() => TripWhereUniqueInput)
+  @Type(() => TripCreateNestedManyWithoutListingsInput)
   @IsOptional()
-  @Field(() => TripWhereUniqueInput, {
+  @Field(() => TripCreateNestedManyWithoutListingsInput, {
     nullable: true,
   })
-  trips?: TripWhereUniqueInput | null;
+  trips?: TripCreateNestedManyWithoutListingsInput;
 
   @ApiProperty({
     required: false,
-    type: () => WishlistWhereUniqueInput,
+    type: () => WishlistCreateNestedManyWithoutListingsInput,
   })
   @ValidateNested()
-  @Type(() => WishlistWhereUniqueInput)
+  @Type(() => WishlistCreateNestedManyWithoutListingsInput)
   @IsOptional()
-  @Field(() => WishlistWhereUniqueInput, {
+  @Field(() => WishlistCreateNestedManyWithoutListingsInput, {
     nullable: true,
   })
-  wishlists?: WishlistWhereUniqueInput | null;
+  wishlists?: WishlistCreateNestedManyWithoutListingsInput;
 }
 
 export { ListingCreateInput as ListingCreateInput };
