@@ -12,6 +12,7 @@ import SearchAddress from "../SearchScheduler/SearchAddress";
 import { userAppStore } from "airbnb/store/store";
 import SearchBeds from "../SearchScheduler/SearchBeds";
 import { useRouter } from "next/navigation";
+import useClickOutside from "airbnb/hooks/useClickOutside";
 export default function Schedule() {
   const router = useRouter();
   const {
@@ -41,9 +42,13 @@ export default function Schedule() {
     }
     router.push("/search");
   };
+  const [containerRef] = useClickOutside(true);
 
   return (
-    <div className="flex rounded-full border border-gray-300 text-airbnb-light-black relative">
+    <div
+      className="flex rounded-full border border-gray-300 text-airbnb-light-black relative"
+      ref={containerRef}
+    >
       <div
         className="flex flex-col hover:bg-gray-100 px-10 py-4 rounded-full cursor-pointer relative"
         onClick={() => setSelectionType("where")}

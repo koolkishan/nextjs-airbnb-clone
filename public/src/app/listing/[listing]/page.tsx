@@ -27,7 +27,7 @@ export default function Page({
   return (
     <div>
       {currentListing && (
-        <>
+        <div className="pb-20">
           <Navbar />
           <div
             className="h-[80vh] overflow-auto no-scrollbar px-20 pt-10 text-airbnb-light-black grid gap-10"
@@ -72,7 +72,7 @@ export default function Page({
           </div>
           <CompactFooter />
           {isAuthModalOpen && <AuthModal />}
-        </>
+        </div>
       )}
     </div>
   );

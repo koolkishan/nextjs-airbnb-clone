@@ -67,18 +67,21 @@ function Navbar() {
     {
       name: "Trips",
       callBack: () => {
+        router.push("/trips");
         setIsContextMenuVisible(false);
       },
     },
     {
       name: "Wishlists",
       callBack: () => {
+        router.push("/wishlist");
         setIsContextMenuVisible(false);
       },
     },
     {
       name: "Manage Listings",
       callBack: () => {
+        router.push("/my-listings");
         setIsContextMenuVisible(false);
       },
     },

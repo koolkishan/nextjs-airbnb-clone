@@ -1,8 +1,8 @@
 import { userAppStore } from "airbnb/store/store";
 import { useEffect, RefObject, useRef } from "react";
 
-function useClickOutside() {
-  const { setSelectionType } = userAppStore();
+function useClickOutside(isScheduleBar = false) {
+  const { setSelectionType, setShowScheduleBar } = userAppStore();
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -10,7 +10,11 @@ function useClickOutside() {
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setSelectionType(undefined);
+        if (!isScheduleBar) {
+          setSelectionType(undefined);
+        } else {
+          setShowScheduleBar();
+        }
       }
     }
 
