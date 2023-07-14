@@ -1,5 +1,5 @@
 import { StringFilter } from "../../util/StringFilter";
-import { UserListRelationFilter } from "../user/UserListRelationFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { JsonFilter } from "../../util/JsonFilter";
 import { IntFilter } from "../../util/IntFilter";
 import { TripListRelationFilter } from "../trip/TripListRelationFilter";
@@ -8,7 +8,7 @@ import { WishlistListRelationFilter } from "../wishlist/WishlistListRelationFilt
 export type ListingWhereInput = {
   description?: StringFilter;
   id?: StringFilter;
-  listingCreatedBy?: UserListRelationFilter;
+  listingCreatedBy?: UserWhereUniqueInput;
   locationData?: JsonFilter;
   locationType?: StringFilter;
   mapData?: JsonFilter;

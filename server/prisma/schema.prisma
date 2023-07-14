@@ -8,39 +8,37 @@ generator client {
 }
 
 model User {
-  createdAt   DateTime  @default(now())
-  firstName   String?
-  id          String    @id @default(cuid())
-  lastName    String?
-  listings    Listing?  @relation(fields: [listingsId], references: [id])
-  listingsId  String?
-  password    String
-  roles       Json
-  trips       Trip?     @relation(fields: [tripsId], references: [id])
-  tripsId     String?
-  updatedAt   DateTime  @updatedAt
-  username    String    @unique
-  wishlists   Wishlist? @relation(fields: [wishlistsId], references: [id])
-  wishlistsId String?
+  createdAt DateTime   @default(now())
+  firstName String?
+  id        String     @id @default(cuid())
+  lastName  String?
+  listings  Listing[]
+  password  String
+  roles     Json
+  trips     Trip[]
+  updatedAt DateTime   @updatedAt
+  username  String     @unique
+  wishlists Wishlist[]
 }
 
 model Listing {
-  createdAt        DateTime   @default(now())
-  description      String
-  id               String     @id @default(cuid())
-  listingCreatedBy User[]
-  locationData     Json
-  locationType     String
-  mapData          Json
-  photos           Json
-  placeAmeneites   Json
-  placeSpace       Json
-  placetype        String
-  price            Int
-  title            String
-  trips            Trip[]
-  updatedAt        DateTime   @updatedAt
-  wishlists        Wishlist[]
+  createdAt          DateTime   @default(now())
+  description        String
+  id                 String     @id @default(cuid())
+  listingCreatedBy   User       @relation(fields: [listingCreatedById], references: [id])
+  listingCreatedById String
+  locationData       Json
+  locationType       String
+  mapData            Json
+  photos             Json
+  placeAmeneites     Json
+  placeSpace         Json
+  placetype          String
+  price              Int
+  title              String
+  trips              Trip[]
+  updatedAt          DateTime   @updatedAt
+  wishlists          Wishlist[]
 }
 
 model Wishlist {

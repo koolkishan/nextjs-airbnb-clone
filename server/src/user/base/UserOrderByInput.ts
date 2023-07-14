@@ -72,17 +72,6 @@ class UserOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  listingsId?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @IsOptional()
-  @IsEnum(SortOrder)
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
   password?: SortOrder;
 
   @ApiProperty({
@@ -105,17 +94,6 @@ class UserOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  tripsId?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @IsOptional()
-  @IsEnum(SortOrder)
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
   updatedAt?: SortOrder;
 
   @ApiProperty({
@@ -128,17 +106,6 @@ class UserOrderByInput {
     nullable: true,
   })
   username?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @IsOptional()
-  @IsEnum(SortOrder)
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  wishlistsId?: SortOrder;
 }
 
 export { UserOrderByInput as UserOrderByInput };

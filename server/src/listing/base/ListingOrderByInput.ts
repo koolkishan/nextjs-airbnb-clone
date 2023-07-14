@@ -61,6 +61,17 @@ class ListingOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  listingCreatedById?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   locationData?: SortOrder;
 
   @ApiProperty({

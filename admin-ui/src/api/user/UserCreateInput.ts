@@ -1,15 +1,15 @@
-import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
+import { ListingCreateNestedManyWithoutUsersInput } from "./ListingCreateNestedManyWithoutUsersInput";
 import { InputJsonValue } from "../../types";
-import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
+import { TripCreateNestedManyWithoutUsersInput } from "./TripCreateNestedManyWithoutUsersInput";
+import { WishlistCreateNestedManyWithoutUsersInput } from "./WishlistCreateNestedManyWithoutUsersInput";
 
 export type UserCreateInput = {
   firstName?: string | null;
   lastName?: string | null;
-  listings?: ListingWhereUniqueInput | null;
+  listings?: ListingCreateNestedManyWithoutUsersInput;
   password: string;
   roles: InputJsonValue;
-  trips?: TripWhereUniqueInput | null;
+  trips?: TripCreateNestedManyWithoutUsersInput;
   username: string;
-  wishlists?: WishlistWhereUniqueInput | null;
+  wishlists?: WishlistCreateNestedManyWithoutUsersInput;
 };

@@ -1,15 +1,15 @@
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
-import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
+import { ListingListRelationFilter } from "../listing/ListingListRelationFilter";
+import { TripListRelationFilter } from "../trip/TripListRelationFilter";
+import { WishlistListRelationFilter } from "../wishlist/WishlistListRelationFilter";
 
 export type UserWhereInput = {
   firstName?: StringNullableFilter;
   id?: StringFilter;
   lastName?: StringNullableFilter;
-  listings?: ListingWhereUniqueInput;
-  trips?: TripWhereUniqueInput;
+  listings?: ListingListRelationFilter;
+  trips?: TripListRelationFilter;
   username?: StringFilter;
-  wishlists?: WishlistWhereUniqueInput;
+  wishlists?: WishlistListRelationFilter;
 };

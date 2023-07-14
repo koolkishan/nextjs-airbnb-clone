@@ -206,6 +206,13 @@ export class WishlistControllerBase {
         createdAt: true,
         description: true,
         id: true,
+
+        listingCreatedBy: {
+          select: {
+            id: true,
+          },
+        },
+
         locationData: true,
         locationType: true,
         mapData: true,
@@ -312,29 +319,9 @@ export class WishlistControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-
-        listings: {
-          select: {
-            id: true,
-          },
-        },
-
         roles: true,
-
-        trips: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         username: true,
-
-        wishlists: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     if (results === null) {
