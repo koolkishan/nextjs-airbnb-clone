@@ -11,14 +11,29 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
 import { JsonFilter } from "../../util/JsonFilter";
 import { IntFilter } from "../../util/IntFilter";
+import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
 @InputType()
 class ListingWhereInput {
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  createdBy?: UserWhereUniqueInput;
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -139,6 +154,30 @@ class ListingWhereInput {
     nullable: true,
   })
   title?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => TripWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => TripWhereUniqueInput)
+  @IsOptional()
+  @Field(() => TripWhereUniqueInput, {
+    nullable: true,
+  })
+  trips?: TripWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => WishlistWhereUniqueInput)
+  @IsOptional()
+  @Field(() => WishlistWhereUniqueInput, {
+    nullable: true,
+  })
+  wishlists?: WishlistWhereUniqueInput;
 }
 
 export { ListingWhereInput as ListingWhereInput };

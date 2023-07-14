@@ -26,6 +26,9 @@ import { ListingCountArgs } from "./ListingCountArgs";
 import { ListingFindManyArgs } from "./ListingFindManyArgs";
 import { ListingFindUniqueArgs } from "./ListingFindUniqueArgs";
 import { Listing } from "./Listing";
+import { User } from "../../user/base/User";
+import { Trip } from "../../trip/base/Trip";
+import { Wishlist } from "../../wishlist/base/Wishlist";
 import { ListingService } from "../listing.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Listing)
@@ -92,7 +95,27 @@ export class ListingResolverBase {
   ): Promise<Listing> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        createdBy: args.data.createdBy
+          ? {
+              connect: args.data.createdBy,
+            }
+          : undefined,
+
+        trips: args.data.trips
+          ? {
+              connect: args.data.trips,
+            }
+          : undefined,
+
+        wishlists: args.data.wishlists
+          ? {
+              connect: args.data.wishlists,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -109,7 +132,27 @@ export class ListingResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          createdBy: args.data.createdBy
+            ? {
+                connect: args.data.createdBy,
+              }
+            : undefined,
+
+          trips: args.data.trips
+            ? {
+                connect: args.data.trips,
+              }
+            : undefined,
+
+          wishlists: args.data.wishlists
+            ? {
+                connect: args.data.wishlists,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -140,5 +183,68 @@ export class ListingResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => User, {
+    nullable: true,
+    name: "createdBy",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async resolveFieldCreatedBy(
+    @graphql.Parent() parent: Listing
+  ): Promise<User | null> {
+    const result = await this.service.getCreatedBy(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Trip, {
+    nullable: true,
+    name: "trips",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Trip",
+    action: "read",
+    possession: "any",
+  })
+  async resolveFieldTrips(
+    @graphql.Parent() parent: Listing
+  ): Promise<Trip | null> {
+    const result = await this.service.getTrips(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Wishlist, {
+    nullable: true,
+    name: "wishlists",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Wishlist",
+    action: "read",
+    possession: "any",
+  })
+  async resolveFieldWishlists(
+    @graphql.Parent() parent: Listing
+  ): Promise<Wishlist | null> {
+    const result = await this.service.getWishlists(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

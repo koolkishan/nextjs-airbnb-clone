@@ -2,6 +2,7 @@ import { SortOrder } from "../../util/SortOrder";
 
 export type ListingOrderByInput = {
   createdAt?: SortOrder;
+  createdBy?: SortOrder;
   description?: SortOrder;
   id?: SortOrder;
   locationData?: SortOrder;
@@ -13,5 +14,7 @@ export type ListingOrderByInput = {
   placetype?: SortOrder;
   price?: SortOrder;
   title?: SortOrder;
+  tripsId?: SortOrder;
   updatedAt?: SortOrder;
+  wishlistsId?: SortOrder;
 };
