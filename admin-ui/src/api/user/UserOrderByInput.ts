@@ -5,11 +5,8 @@ export type UserOrderByInput = {
   firstName?: SortOrder;
   id?: SortOrder;
   lastName?: SortOrder;
-  listingsId?: SortOrder;
   password?: SortOrder;
   roles?: SortOrder;
-  tripsId?: SortOrder;
   updatedAt?: SortOrder;
   username?: SortOrder;
-  wishlistsId?: SortOrder;
 };

@@ -27,6 +27,15 @@ import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+import { ListingFindManyArgs } from "../../listing/base/ListingFindManyArgs";
+import { Listing } from "../../listing/base/Listing";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
+import { TripFindManyArgs } from "../../trip/base/TripFindManyArgs";
+import { Trip } from "../../trip/base/Trip";
+import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
+import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
+import { Wishlist } from "../../wishlist/base/Wishlist";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -48,55 +57,15 @@ export class UserControllerBase {
   })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
-      data: {
-        ...data,
-
-        listings: data.listings
-          ? {
-              connect: data.listings,
-            }
-          : undefined,
-
-        trips: data.trips
-          ? {
-              connect: data.trips,
-            }
-          : undefined,
-
-        wishlists: data.wishlists
-          ? {
-              connect: data.wishlists,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
-
-        listings: {
-          select: {
-            id: true,
-          },
-        },
-
         roles: true,
-
-        trips: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         username: true,
-
-        wishlists: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
   }
@@ -122,29 +91,9 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-
-        listings: {
-          select: {
-            id: true,
-          },
-        },
-
         roles: true,
-
-        trips: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         username: true,
-
-        wishlists: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
   }
@@ -171,29 +120,9 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
-
-        listings: {
-          select: {
-            id: true,
-          },
-        },
-
         roles: true,
-
-        trips: {
-          select: {
-            id: true,
-          },
-        },
-
         updatedAt: true,
         username: true,
-
-        wishlists: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     if (result === null) {
@@ -223,55 +152,15 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          listings: data.listings
-            ? {
-                connect: data.listings,
-              }
-            : undefined,
-
-          trips: data.trips
-            ? {
-                connect: data.trips,
-              }
-            : undefined,
-
-          wishlists: data.wishlists
-            ? {
-                connect: data.wishlists,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
-
-          listings: {
-            select: {
-              id: true,
-            },
-          },
-
           roles: true,
-
-          trips: {
-            select: {
-              id: true,
-            },
-          },
-
           updatedAt: true,
           username: true,
-
-          wishlists: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {
@@ -306,29 +195,9 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
-
-          listings: {
-            select: {
-              id: true,
-            },
-          },
-
           roles: true,
-
-          trips: {
-            select: {
-              id: true,
-            },
-          },
-
           updatedAt: true,
           username: true,
-
-          wishlists: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {
@@ -339,5 +208,307 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/listings")
+  @ApiNestedQuery(ListingFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Listing",
+    action: "read",
+    possession: "any",
+  })
+  async findManyListings(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Listing[]> {
+    const query = plainToClass(ListingFindManyArgs, request.query);
+    const results = await this.service.findListings(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        description: true,
+        id: true,
+
+        listingCreatedBy: {
+          select: {
+            id: true,
+          },
+        },
+
+        locationData: true,
+        locationType: true,
+        mapData: true,
+        photos: true,
+        placeAmeneites: true,
+        placeSpace: true,
+        placetype: true,
+        price: true,
+        title: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/listings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectListings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ListingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      listings: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/listings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateListings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ListingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      listings: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/listings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectListings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ListingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      listings: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/trips")
+  @ApiNestedQuery(TripFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Trip",
+    action: "read",
+    possession: "any",
+  })
+  async findManyTrips(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Trip[]> {
+    const query = plainToClass(TripFindManyArgs, request.query);
+    const results = await this.service.findTrips(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/trips")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectTrips(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TripWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      trips: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/trips")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateTrips(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TripWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      trips: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/trips")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectTrips(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TripWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      trips: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/wishlists")
+  @ApiNestedQuery(WishlistFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Wishlist",
+    action: "read",
+    possession: "any",
+  })
+  async findManyWishlists(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Wishlist[]> {
+    const query = plainToClass(WishlistFindManyArgs, request.query);
+    const results = await this.service.findWishlists(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

@@ -1,15 +1,15 @@
-import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
+import { ListingUpdateManyWithoutUsersInput } from "./ListingUpdateManyWithoutUsersInput";
 import { InputJsonValue } from "../../types";
-import { TripWhereUniqueInput } from "../trip/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../wishlist/WishlistWhereUniqueInput";
+import { TripUpdateManyWithoutUsersInput } from "./TripUpdateManyWithoutUsersInput";
+import { WishlistUpdateManyWithoutUsersInput } from "./WishlistUpdateManyWithoutUsersInput";
 
 export type UserUpdateInput = {
   firstName?: string | null;
   lastName?: string | null;
-  listings?: ListingWhereUniqueInput | null;
+  listings?: ListingUpdateManyWithoutUsersInput;
   password?: string;
   roles?: InputJsonValue;
-  trips?: TripWhereUniqueInput | null;
+  trips?: TripUpdateManyWithoutUsersInput;
   username?: string;
-  wishlists?: WishlistWhereUniqueInput | null;
+  wishlists?: WishlistUpdateManyWithoutUsersInput;
 };

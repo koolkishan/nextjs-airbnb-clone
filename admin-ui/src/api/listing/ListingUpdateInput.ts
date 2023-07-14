@@ -1,11 +1,11 @@
-import { UserUpdateManyWithoutListingsInput } from "./UserUpdateManyWithoutListingsInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { InputJsonValue } from "../../types";
 import { TripUpdateManyWithoutListingsInput } from "./TripUpdateManyWithoutListingsInput";
 import { WishlistUpdateManyWithoutListingsInput } from "./WishlistUpdateManyWithoutListingsInput";
 
 export type ListingUpdateInput = {
   description?: string;
-  listingCreatedBy?: UserUpdateManyWithoutListingsInput;
+  listingCreatedBy?: UserWhereUniqueInput;
   locationData?: InputJsonValue;
   locationType?: string;
   mapData?: InputJsonValue;

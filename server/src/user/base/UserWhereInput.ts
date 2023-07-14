@@ -15,9 +15,9 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
-import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
-import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
+import { ListingListRelationFilter } from "../../listing/base/ListingListRelationFilter";
+import { TripListRelationFilter } from "../../trip/base/TripListRelationFilter";
+import { WishlistListRelationFilter } from "../../wishlist/base/WishlistListRelationFilter";
 
 @InputType()
 class UserWhereInput {
@@ -56,27 +56,27 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingWhereUniqueInput,
+    type: () => ListingListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => ListingWhereUniqueInput)
+  @Type(() => ListingListRelationFilter)
   @IsOptional()
-  @Field(() => ListingWhereUniqueInput, {
+  @Field(() => ListingListRelationFilter, {
     nullable: true,
   })
-  listings?: ListingWhereUniqueInput;
+  listings?: ListingListRelationFilter;
 
   @ApiProperty({
     required: false,
-    type: () => TripWhereUniqueInput,
+    type: () => TripListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => TripWhereUniqueInput)
+  @Type(() => TripListRelationFilter)
   @IsOptional()
-  @Field(() => TripWhereUniqueInput, {
+  @Field(() => TripListRelationFilter, {
     nullable: true,
   })
-  trips?: TripWhereUniqueInput;
+  trips?: TripListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -91,15 +91,15 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => WishlistWhereUniqueInput,
+    type: () => WishlistListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => WishlistWhereUniqueInput)
+  @Type(() => WishlistListRelationFilter)
   @IsOptional()
-  @Field(() => WishlistWhereUniqueInput, {
+  @Field(() => WishlistListRelationFilter, {
     nullable: true,
   })
-  wishlists?: WishlistWhereUniqueInput;
+  wishlists?: WishlistListRelationFilter;
 }
 
 export { UserWhereInput as UserWhereInput };

@@ -15,8 +15,8 @@ import {
   IsDate,
   IsString,
   ValidateNested,
-  IsOptional,
   IsInt,
+  IsOptional,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
@@ -54,12 +54,11 @@ class Listing {
 
   @ApiProperty({
     required: true,
-    type: () => [User],
+    type: () => User,
   })
   @ValidateNested()
   @Type(() => User)
-  @IsOptional()
-  listingCreatedBy?: Array<User>;
+  listingCreatedBy?: User;
 
   @ApiProperty({
     required: true,

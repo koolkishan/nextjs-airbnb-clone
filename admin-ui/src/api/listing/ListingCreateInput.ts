@@ -1,11 +1,11 @@
-import { UserCreateNestedManyWithoutListingsInput } from "./UserCreateNestedManyWithoutListingsInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 import { InputJsonValue } from "../../types";
 import { TripCreateNestedManyWithoutListingsInput } from "./TripCreateNestedManyWithoutListingsInput";
 import { WishlistCreateNestedManyWithoutListingsInput } from "./WishlistCreateNestedManyWithoutListingsInput";
 
 export type ListingCreateInput = {
   description: string;
-  listingCreatedBy?: UserCreateNestedManyWithoutListingsInput;
+  listingCreatedBy: UserWhereUniqueInput;
   locationData: InputJsonValue;
   locationType: string;
   mapData: InputJsonValue;
