@@ -28,16 +28,13 @@ import { ListingFindManyArgs } from "./ListingFindManyArgs";
 import { ListingUpdateInput } from "./ListingUpdateInput";
 import { Listing } from "./Listing";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ListingControllerBase {
   constructor(
     protected readonly service: ListingService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Listing })
@@ -51,9 +48,36 @@ export class ListingControllerBase {
   })
   async create(@common.Body() data: ListingCreateInput): Promise<Listing> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        createdBy: data.createdBy
+          ? {
+              connect: data.createdBy,
+            }
+          : undefined,
+
+        trips: data.trips
+          ? {
+              connect: data.trips,
+            }
+          : undefined,
+
+        wishlists: data.wishlists
+          ? {
+              connect: data.wishlists,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
+
+        createdBy: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         locationData: true,
@@ -65,29 +89,49 @@ export class ListingControllerBase {
         placetype: true,
         price: true,
         title: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
 
-  // @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Listing] })
   @ApiNestedQuery(ListingFindManyArgs)
-  // @nestAccessControl.UseRoles({
-  //   resource: "Listing",
-  //   action: "read",
-  //   possession: "any",
-  // })
-  // @swagger.ApiForbiddenResponse({
-  //   type: errors.ForbiddenException,
-  // })
+  @nestAccessControl.UseRoles({
+    resource: "Listing",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Listing[]> {
     const args = plainToClass(ListingFindManyArgs, request.query);
     return this.service.findMany({
       ...args,
       select: {
         createdAt: true,
+
+        createdBy: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         locationData: true,
@@ -99,20 +143,33 @@ export class ListingControllerBase {
         placetype: true,
         price: true,
         title: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
 
-  // @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Listing })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  // @nestAccessControl.UseRoles({
-  //   resource: "Listing",
-  //   action: "read",
-  //   possession: "own",
-  // })
+  @nestAccessControl.UseRoles({
+    resource: "Listing",
+    action: "read",
+    possession: "own",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -123,6 +180,13 @@ export class ListingControllerBase {
       where: params,
       select: {
         createdAt: true,
+
+        createdBy: {
+          select: {
+            id: true,
+          },
+        },
+
         description: true,
         id: true,
         locationData: true,
@@ -134,7 +198,20 @@ export class ListingControllerBase {
         placetype: true,
         price: true,
         title: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -157,11 +234,6 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   async update(
     @common.Param() params: ListingWhereUniqueInput,
     @common.Body() data: ListingUpdateInput
@@ -169,9 +241,36 @@ export class ListingControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          createdBy: data.createdBy
+            ? {
+                connect: data.createdBy,
+              }
+            : undefined,
+
+          trips: data.trips
+            ? {
+                connect: data.trips,
+              }
+            : undefined,
+
+          wishlists: data.wishlists
+            ? {
+                connect: data.wishlists,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
+
+          createdBy: {
+            select: {
+              id: true,
+            },
+          },
+
           description: true,
           id: true,
           locationData: true,
@@ -183,7 +282,20 @@ export class ListingControllerBase {
           placetype: true,
           price: true,
           title: true,
+
+          trips: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
+
+          wishlists: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -207,11 +319,6 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   async delete(
     @common.Param() params: ListingWhereUniqueInput
   ): Promise<Listing | null> {
@@ -220,6 +327,13 @@ export class ListingControllerBase {
         where: params,
         select: {
           createdAt: true,
+
+          createdBy: {
+            select: {
+              id: true,
+            },
+          },
+
           description: true,
           id: true,
           locationData: true,
@@ -231,7 +345,20 @@ export class ListingControllerBase {
           placetype: true,
           price: true,
           title: true,
+
+          trips: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
+
+          wishlists: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

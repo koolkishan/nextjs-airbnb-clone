@@ -48,15 +48,55 @@ export class UserControllerBase {
   })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        listings: data.listings
+          ? {
+              connect: data.listings,
+            }
+          : undefined,
+
+        trips: data.trips
+          ? {
+              connect: data.trips,
+            }
+          : undefined,
+
+        wishlists: data.wishlists
+          ? {
+              connect: data.wishlists,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
         username: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -82,9 +122,29 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
         username: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -111,9 +171,29 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
+
+        trips: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
         username: true,
+
+        wishlists: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -143,15 +223,55 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          listings: data.listings
+            ? {
+                connect: data.listings,
+              }
+            : undefined,
+
+          trips: data.trips
+            ? {
+                connect: data.trips,
+              }
+            : undefined,
+
+          wishlists: data.wishlists
+            ? {
+                connect: data.wishlists,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          listings: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
+
+          trips: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
           username: true,
+
+          wishlists: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -186,9 +306,29 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+
+          listings: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
+
+          trips: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
           username: true,
+
+          wishlists: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

@@ -1,6 +1,16 @@
 import * as React from "react";
-import { List, Datagrid, ListProps, DateField, TextField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  ListProps,
+  DateField,
+  ReferenceField,
+  TextField,
+} from "react-admin";
 import Pagination from "../Components/Pagination";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
+import { TRIP_TITLE_FIELD } from "../trip/TripTitle";
+import { WISHLIST_TITLE_FIELD } from "../wishlist/WishlistTitle";
 
 export const ListingList = (props: ListProps): React.ReactElement => {
   return (
@@ -13,6 +23,9 @@ export const ListingList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <DateField source="createdAt" label="Created At" />
+        <ReferenceField label="createdBy" source="user.id" reference="User">
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="description" source="description" />
         <TextField label="ID" source="id" />
         <TextField label="locationData" source="locationData" />
@@ -24,7 +37,17 @@ export const ListingList = (props: ListProps): React.ReactElement => {
         <TextField label="placetype" source="placetype" />
         <TextField label="price" source="price" />
         <TextField label="title" source="title" />
+        <ReferenceField label="trips" source="trip.id" reference="Trip">
+          <TextField source={TRIP_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
+        <ReferenceField
+          label="wishlists"
+          source="wishlist.id"
+          reference="Wishlist"
+        >
+          <TextField source={WISHLIST_TITLE_FIELD} />
+        </ReferenceField>
       </Datagrid>
     </List>
   );

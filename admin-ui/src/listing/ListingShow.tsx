@@ -4,14 +4,21 @@ import {
   SimpleShowLayout,
   ShowProps,
   DateField,
+  ReferenceField,
   TextField,
 } from "react-admin";
+import { USER_TITLE_FIELD } from "../user/UserTitle";
+import { TRIP_TITLE_FIELD } from "../trip/TripTitle";
+import { WISHLIST_TITLE_FIELD } from "../wishlist/WishlistTitle";
 
 export const ListingShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
+        <ReferenceField label="createdBy" source="user.id" reference="User">
+          <TextField source={USER_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="description" source="description" />
         <TextField label="ID" source="id" />
         <TextField label="locationData" source="locationData" />
@@ -23,7 +30,17 @@ export const ListingShow = (props: ShowProps): React.ReactElement => {
         <TextField label="placetype" source="placetype" />
         <TextField label="price" source="price" />
         <TextField label="title" source="title" />
+        <ReferenceField label="trips" source="trip.id" reference="Trip">
+          <TextField source={TRIP_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
+        <ReferenceField
+          label="wishlists"
+          source="wishlist.id"
+          reference="Wishlist"
+        >
+          <TextField source={WISHLIST_TITLE_FIELD} />
+        </ReferenceField>
       </SimpleShowLayout>
     </Show>
   );

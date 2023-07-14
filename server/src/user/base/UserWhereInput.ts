@@ -13,8 +13,11 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
+import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
 @InputType()
 class UserWhereInput {
@@ -53,6 +56,30 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
+    type: () => ListingWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ListingWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ListingWhereUniqueInput, {
+    nullable: true,
+  })
+  listings?: ListingWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => TripWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => TripWhereUniqueInput)
+  @IsOptional()
+  @Field(() => TripWhereUniqueInput, {
+    nullable: true,
+  })
+  trips?: TripWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -61,6 +88,18 @@ class UserWhereInput {
     nullable: true,
   })
   username?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => WishlistWhereUniqueInput)
+  @IsOptional()
+  @Field(() => WishlistWhereUniqueInput, {
+    nullable: true,
+  })
+  wishlists?: WishlistWhereUniqueInput;
 }
 
 export { UserWhereInput as UserWhereInput };
