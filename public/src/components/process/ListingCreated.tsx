@@ -6,7 +6,6 @@ import Confetti from "react-confetti";
 
 export default function ListingCreated() {
   const router = useRouter();
-
   const {
     locationType,
     placetype,
@@ -18,21 +17,9 @@ export default function ListingCreated() {
     title,
     description,
     price,
+    userInfo,
   } = userAppStore();
   useEffect(() => {
-    console.log({
-      locationType,
-      placetype,
-      mapData,
-      locationData,
-      placeSpace,
-      placeAmeneites,
-      photos,
-      title,
-      description,
-      price,
-    });
-    console.log(typeof placetype);
     createLisitngAPI({
       locationType,
       placetype,
@@ -44,6 +31,7 @@ export default function ListingCreated() {
       title,
       description,
       price,
+      listingCreatedBy: { id: userInfo?.id },
     });
   }, [
     locationType,
@@ -56,6 +44,7 @@ export default function ListingCreated() {
     title,
     description,
     price,
+    userInfo,
   ]);
 
   return (
