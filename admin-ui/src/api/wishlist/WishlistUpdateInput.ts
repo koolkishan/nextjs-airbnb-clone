@@ -1,7 +1,7 @@
-import { ListingUpdateManyWithoutWishlistsInput } from "./ListingUpdateManyWithoutWishlistsInput";
-import { UserUpdateManyWithoutWishlistsInput } from "./UserUpdateManyWithoutWishlistsInput";
+import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type WishlistUpdateInput = {
-  listing?: ListingUpdateManyWithoutWishlistsInput;
-  user?: UserUpdateManyWithoutWishlistsInput;
+  listing?: ListingWhereUniqueInput;
+  user?: UserWhereUniqueInput;
 };

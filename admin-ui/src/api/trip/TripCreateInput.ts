@@ -1,7 +1,7 @@
-import { ListingCreateNestedManyWithoutTripsInput } from "./ListingCreateNestedManyWithoutTripsInput";
-import { UserCreateNestedManyWithoutTripsInput } from "./UserCreateNestedManyWithoutTripsInput";
+import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type TripCreateInput = {
-  listing?: ListingCreateNestedManyWithoutTripsInput;
-  user?: UserCreateNestedManyWithoutTripsInput;
+  listing: ListingWhereUniqueInput;
+  user: UserWhereUniqueInput;
 };

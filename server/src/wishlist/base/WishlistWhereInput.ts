@@ -14,8 +14,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { ListingListRelationFilter } from "../../listing/base/ListingListRelationFilter";
-import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
 class WishlistWhereInput {
@@ -32,27 +32,27 @@ class WishlistWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingListRelationFilter,
+    type: () => ListingWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => ListingListRelationFilter)
+  @Type(() => ListingWhereUniqueInput)
   @IsOptional()
-  @Field(() => ListingListRelationFilter, {
+  @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listing?: ListingListRelationFilter;
+  listing?: ListingWhereUniqueInput;
 
   @ApiProperty({
     required: false,
-    type: () => UserListRelationFilter,
+    type: () => UserWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => UserListRelationFilter)
+  @Type(() => UserWhereUniqueInput)
   @IsOptional()
-  @Field(() => UserListRelationFilter, {
+  @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  user?: UserListRelationFilter;
+  user?: UserWhereUniqueInput;
 }
 
 export { WishlistWhereInput as WishlistWhereInput };

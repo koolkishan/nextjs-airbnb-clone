@@ -1,7 +1,7 @@
-import { ListingUpdateManyWithoutTripsInput } from "./ListingUpdateManyWithoutTripsInput";
-import { UserUpdateManyWithoutTripsInput } from "./UserUpdateManyWithoutTripsInput";
+import { ListingWhereUniqueInput } from "../listing/ListingWhereUniqueInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type TripUpdateInput = {
-  listing?: ListingUpdateManyWithoutTripsInput;
-  user?: UserUpdateManyWithoutTripsInput;
+  listing?: ListingWhereUniqueInput;
+  user?: UserWhereUniqueInput;
 };
