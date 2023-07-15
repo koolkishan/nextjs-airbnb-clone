@@ -5,19 +5,7 @@ import { userAppStore } from "airbnb/store/store";
 export default function ListView() {
   const { listings } = userAppStore();
   return (
-    <div className="grid grid-cols-4 px-20 gap-3 py-10 h-[82.5vh] overflow-auto no-scrollbar">
-      {listings?.map((listing: any, index: number) => (
-        <ListingCard data={listing} key={index} />
-      ))}
-      {listings?.map((listing: any, index: number) => (
-        <ListingCard data={listing} key={index} />
-      ))}
-      {listings?.map((listing: any, index: number) => (
-        <ListingCard data={listing} key={index} />
-      ))}
-      {listings?.map((listing: any, index: number) => (
-        <ListingCard data={listing} key={index} />
-      ))}
+    <div className="grid grid-cols-4 px-20 gap-3 py-10 h-[82.5vh] overflow-auto no-scrollbar justify-start items-start">
       {listings?.map((listing: any, index: number) => (
         <ListingCard data={listing} key={index} />
       ))}
