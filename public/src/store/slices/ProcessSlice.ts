@@ -27,9 +27,23 @@ export interface ProcessSlice {
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   setPrice: (price: number) => void;
+  resetNewListingData: () => void;
 }
 
 export const createProcessSlice: StateCreator<ProcessSlice> = (set, get) => ({
+  resetNewListingData: () =>
+    set({
+      locationType: undefined,
+      placetype: undefined,
+      mapData: undefined,
+      locationData: undefined,
+      placeSpace: { bathrooms: 1, beds: 1, guests: 4 },
+      placeAmeneites: [],
+      photos: [],
+      title: "",
+      description: "",
+      price: 0,
+    }),
   locationType: undefined,
   setLocationType: (locationType: any) => set({ locationType }),
   placetype: undefined,

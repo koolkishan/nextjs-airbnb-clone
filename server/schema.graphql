@@ -46,6 +46,7 @@ type Listing {
   createdAt: DateTime!
   description: String!
   id: String!
+  listingCreatedBy: User
   locationData: JSON!
   locationType: String!
   mapData: JSON!
@@ -55,11 +56,14 @@ type Listing {
   placetype: String!
   price: Float!
   title: String!
+  trips(orderBy: [TripOrderByInput!], skip: Float, take: Float, where: TripWhereInput): [Trip!]!
   updatedAt: DateTime!
+  wishlists(orderBy: [WishlistOrderByInput!], skip: Float, take: Float, where: WishlistWhereInput): [Wishlist!]!
 }
 
 input ListingCreateInput {
   description: String!
+  listingCreatedBy: UserWhereUniqueInput!
   locationData: JSON!
   locationType: String!
   mapData: JSON!
@@ -69,12 +73,25 @@ input ListingCreateInput {
   placetype: String!
   price: Float!
   title: String!
+  trips: TripCreateNestedManyWithoutListingsInput
+  wishlists: WishlistCreateNestedManyWithoutListingsInput
+}
+
+input ListingCreateNestedManyWithoutUsersInput {
+  connect: [ListingWhereUniqueInput!]
+}
+
+input ListingListRelationFilter {
+  every: ListingWhereInput
+  none: ListingWhereInput
+  some: ListingWhereInput
 }
 
 input ListingOrderByInput {
   createdAt: SortOrder
   description: SortOrder
   id: SortOrder
+  listingCreatedById: SortOrder
   locationData: SortOrder
   locationType: SortOrder
   mapData: SortOrder
@@ -89,6 +106,7 @@ input ListingOrderByInput {
 
 input ListingUpdateInput {
   description: String
+  listingCreatedBy: UserWhereUniqueInput
   locationData: JSON
   locationType: String
   mapData: JSON
@@ -98,11 +116,20 @@ input ListingUpdateInput {
   placetype: String
   price: Float
   title: String
+  trips: TripUpdateManyWithoutListingsInput
+  wishlists: WishlistUpdateManyWithoutListingsInput
+}
+
+input ListingUpdateManyWithoutUsersInput {
+  connect: [ListingWhereUniqueInput!]
+  disconnect: [ListingWhereUniqueInput!]
+  set: [ListingWhereUniqueInput!]
 }
 
 input ListingWhereInput {
   description: StringFilter
   id: StringFilter
+  listingCreatedBy: UserWhereUniqueInput
   locationData: JsonFilter
   locationType: StringFilter
   mapData: JsonFilter
@@ -112,6 +139,8 @@ input ListingWhereInput {
   placetype: StringFilter
   price: IntFilter
   title: StringFilter
+  trips: TripListRelationFilter
+  wishlists: WishlistListRelationFilter
 }
 
 input ListingWhereUniqueInput {
@@ -124,25 +153,37 @@ type MetaQueryPayload {
 
 type Mutation {
   createListing(data: ListingCreateInput!): Listing!
+  createTrip(data: TripCreateInput!): Trip!
   createUser(data: UserCreateInput!): User!
+  createWishlist(data: WishlistCreateInput!): Wishlist!
   deleteListing(where: ListingWhereUniqueInput!): Listing!
+  deleteTrip(where: TripWhereUniqueInput!): Trip!
   deleteUser(where: UserWhereUniqueInput!): User!
+  deleteWishlist(where: WishlistWhereUniqueInput!): Wishlist!
   login(credentials: Credentials!): UserInfo!
   signup(credentials: Credentials!): UserInfo!
   updateListing(data: ListingUpdateInput!, where: ListingWhereUniqueInput!): Listing!
+  updateTrip(data: TripUpdateInput!, where: TripWhereUniqueInput!): Trip!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  updateWishlist(data: WishlistUpdateInput!, where: WishlistWhereUniqueInput!): Wishlist!
 }
 
 type Query {
   _listingsMeta(where: ListingWhereInput): MetaQueryPayload!
+  _tripsMeta(where: TripWhereInput): MetaQueryPayload!
   _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  _wishlistsMeta(where: WishlistWhereInput): MetaQueryPayload!
   checkUser(CheckUserValues: CheckUserValues!): User!
   listing(where: ListingWhereUniqueInput!): Listing
   listings(orderBy: [ListingOrderByInput!], skip: Float, take: Float, where: ListingWhereInput): [Listing!]!
   me: User!
+  trip(where: TripWhereUniqueInput!): Trip
+  trips(orderBy: [TripOrderByInput!], skip: Float, take: Float, where: TripWhereInput): [Trip!]!
   user(where: UserWhereUniqueInput!): User
   userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+  wishlist(where: WishlistWhereUniqueInput!): Wishlist
+  wishlists(orderBy: [WishlistOrderByInput!], skip: Float, take: Float, where: WishlistWhereInput): [Wishlist!]!
 }
 
 enum QueryMode {
@@ -185,22 +226,90 @@ input StringNullableFilter {
   startsWith: String
 }
 
+type Trip {
+  createdAt: DateTime!
+  id: String!
+  listing: Listing
+  updatedAt: DateTime!
+  user: User
+}
+
+input TripCreateInput {
+  listing: ListingWhereUniqueInput!
+  user: UserWhereUniqueInput!
+}
+
+input TripCreateNestedManyWithoutListingsInput {
+  connect: [TripWhereUniqueInput!]
+}
+
+input TripCreateNestedManyWithoutUsersInput {
+  connect: [TripWhereUniqueInput!]
+}
+
+input TripListRelationFilter {
+  every: TripWhereInput
+  none: TripWhereInput
+  some: TripWhereInput
+}
+
+input TripOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  listingId: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
+input TripUpdateInput {
+  listing: ListingWhereUniqueInput
+  user: UserWhereUniqueInput
+}
+
+input TripUpdateManyWithoutListingsInput {
+  connect: [TripWhereUniqueInput!]
+  disconnect: [TripWhereUniqueInput!]
+  set: [TripWhereUniqueInput!]
+}
+
+input TripUpdateManyWithoutUsersInput {
+  connect: [TripWhereUniqueInput!]
+  disconnect: [TripWhereUniqueInput!]
+  set: [TripWhereUniqueInput!]
+}
+
+input TripWhereInput {
+  id: StringFilter
+  listing: ListingWhereUniqueInput
+  user: UserWhereUniqueInput
+}
+
+input TripWhereUniqueInput {
+  id: String!
+}
+
 type User {
   createdAt: DateTime!
   firstName: String
   id: String!
   lastName: String
+  listings(orderBy: [ListingOrderByInput!], skip: Float, take: Float, where: ListingWhereInput): [Listing!]!
   roles: JSON!
+  trips(orderBy: [TripOrderByInput!], skip: Float, take: Float, where: TripWhereInput): [Trip!]!
   updatedAt: DateTime!
   username: String!
+  wishlists(orderBy: [WishlistOrderByInput!], skip: Float, take: Float, where: WishlistWhereInput): [Wishlist!]!
 }
 
 input UserCreateInput {
   firstName: String
   lastName: String
+  listings: ListingCreateNestedManyWithoutUsersInput
   password: String!
   roles: JSON!
+  trips: TripCreateNestedManyWithoutUsersInput
   username: String!
+  wishlists: WishlistCreateNestedManyWithoutUsersInput
 }
 
 type UserInfo {
@@ -224,18 +333,86 @@ input UserOrderByInput {
 input UserUpdateInput {
   firstName: String
   lastName: String
+  listings: ListingUpdateManyWithoutUsersInput
   password: String
   roles: JSON
+  trips: TripUpdateManyWithoutUsersInput
   username: String
+  wishlists: WishlistUpdateManyWithoutUsersInput
 }
 
 input UserWhereInput {
   firstName: StringNullableFilter
   id: StringFilter
   lastName: StringNullableFilter
+  listings: ListingListRelationFilter
+  trips: TripListRelationFilter
   username: StringFilter
+  wishlists: WishlistListRelationFilter
 }
 
 input UserWhereUniqueInput {
+  id: String!
+}
+
+type Wishlist {
+  createdAt: DateTime!
+  id: String!
+  listing: Listing
+  updatedAt: DateTime!
+  user: User
+}
+
+input WishlistCreateInput {
+  listing: ListingWhereUniqueInput!
+  user: UserWhereUniqueInput!
+}
+
+input WishlistCreateNestedManyWithoutListingsInput {
+  connect: [WishlistWhereUniqueInput!]
+}
+
+input WishlistCreateNestedManyWithoutUsersInput {
+  connect: [WishlistWhereUniqueInput!]
+}
+
+input WishlistListRelationFilter {
+  every: WishlistWhereInput
+  none: WishlistWhereInput
+  some: WishlistWhereInput
+}
+
+input WishlistOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  listingId: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
+input WishlistUpdateInput {
+  listing: ListingWhereUniqueInput
+  user: UserWhereUniqueInput
+}
+
+input WishlistUpdateManyWithoutListingsInput {
+  connect: [WishlistWhereUniqueInput!]
+  disconnect: [WishlistWhereUniqueInput!]
+  set: [WishlistWhereUniqueInput!]
+}
+
+input WishlistUpdateManyWithoutUsersInput {
+  connect: [WishlistWhereUniqueInput!]
+  disconnect: [WishlistWhereUniqueInput!]
+  set: [WishlistWhereUniqueInput!]
+}
+
+input WishlistWhereInput {
+  id: StringFilter
+  listing: ListingWhereUniqueInput
+  user: UserWhereUniqueInput
+}
+
+input WishlistWhereUniqueInput {
   id: String!
 }

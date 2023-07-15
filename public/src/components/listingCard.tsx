@@ -1,29 +1,113 @@
+"use client";
+import {
+  addToWishList,
+  deleteListingAPI,
+  removeFromWishListAPI,
+} from "airbnb/lib/lisitng";
+import { userAppStore } from "airbnb/store/store";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { IoMdHeart } from "react-icons/io";
 
-export default function ListingCard({ data }: any) {
+export default function ListingCard({
+  data,
+  isMyListing = false,
+  isWishList = false,
+  wishListId = undefined,
+}: any) {
+  const {
+    removeUserListing,
+    userInfo,
+    wishLists,
+    addToWishListSlice,
+    wishListsPage,
+    setWishListsPage,
+  } = userAppStore();
+  const pathname = usePathname();
+
   const router = useRouter();
+  const deleteListing = async () => {
+    await deleteListingAPI(data?.id);
+    removeUserListing(data.id);
+  };
+
+  const addWishList = async () => {
+    await addToWishList(data.id, userInfo?.id);
+    addToWishListSlice(data.id);
+  };
+
+  const removeWishlist = async () => {
+    // const id = wishLists.find((list) => console.log(list));
+    // console.log({ id });
+    // await removeFromWishListAPI(id.id);
+  };
+
+  const deleteWishList = async () => {
+    await removeFromWishListAPI(wishListId);
+    const index = wishListsPage.findIndex((list) => list.id === wishListId);
+    if (index !== -1) {
+      wishListsPage.splice(index, 1);
+      setWishListsPage(wishListsPage);
+    }
+  };
+
   return (
-    <div
-      className="flex items-center justify-center cursor-pointer"
-      onClick={() => router.push(`/listing/${data.id}`)}
-    >
-      <div className="flex flex-col gap-2">
-        <div>
-          <Image
-            src={data?.photos[0]}
-            height={300}
-            width={300}
-            alt="listing"
-            className="rounded-lg"
-          />
-        </div>
-        <div>
-          <h3>{data.title}</h3>
-          <span>${data.price} night</span>
+    <div className="flex items-center justify-center flex-col gap-1">
+      <div
+        className="flex items-center justify-center cursor-pointer w-full "
+        onClick={() => router.push(`/listing/${data.id}`)}
+      >
+        <div className="flex flex-col gap-2">
+          <div className="relative w-80 h-72 ">
+            <Image
+              src={data?.photos[0]}
+              // height={300}
+              // width={300}
+              fill
+              alt="listing"
+              className="rounded-lg object-cover"
+            />
+            {pathname === "/" && (
+              <div className="absolute z-20 right-2 top-2">
+                <IoMdHeart
+                  className={`text-3xl ${
+                    wishLists.includes(data.id)
+                      ? "text-airbnb-theme-color"
+                      : "opacity-50"
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (wishLists.includes(data.id)) {
+                      removeWishlist();
+                    } else addWishList();
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div>
+            <h3>{data.title}</h3>
+            <span>${data.price} night</span>
+          </div>
         </div>
       </div>
+      {isMyListing && (
+        <button
+          className="bg-airbnb-gradient py-3 mt-5  px-5 text-white text-base font-medium rounded-md cursor-pointer w-80"
+          onClick={deleteListing}
+        >
+          Delete
+        </button>
+      )}
+      {isWishList && (
+        <button
+          className="bg-airbnb-gradient py-3 mt-5  px-5 text-white text-base font-medium rounded-md cursor-pointer w-80"
+          onClick={deleteWishList}
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 }

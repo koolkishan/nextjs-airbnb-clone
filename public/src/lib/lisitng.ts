@@ -2,6 +2,7 @@ import { get } from "http";
 import { createUrl, post } from "./http";
 import qs from "qs";
 import axios from "axios";
+import { data } from "autoprefixer";
 
 export const createLisitngAPI = async (listingData: any) => {
   console.log({ listingData });
@@ -109,4 +110,70 @@ export const getSearchListing = async (searchTerm: string) => {
 
   console.log({ result });
   return result.data;
+};
+
+export const getUserListings = async (userId) => {
+  const query = qs.stringify({
+    where: { listingCreatedById: userId },
+  });
+  const result = await axios.get(createUrl(`/api/listings?${query}`));
+  if (!result) {
+    console.log("not found");
+  }
+  console.log({ result });
+  return result.data;
+};
+
+export const deleteListingAPI = async (id: string) => {
+  const result = await axios.delete(createUrl(`/api/listings/${id}`));
+  if (!result) {
+    console.log("cannot delete");
+  }
+  return result;
+};
+
+export const addToWishList = async (id: string, userId: string) => {
+  const query = {
+    listing: { id },
+    user: { id: userId },
+  };
+
+  const result = (
+    await post(createUrl("/api/wishlists"), {
+      ...query,
+    }).catch(() => null)
+  )?.data;
+
+  console.log({ result });
+
+  if (!result) {
+    return alert("Could not create task");
+  }
+
+  return result;
+};
+
+export const getUserWishlists = async (userId: string) => {
+  const query = qs.stringify({
+    where: {
+      user: { id: userId },
+    },
+    select: {
+      listing: true,
+    },
+  });
+  const result = (
+    await axios.get(createUrl(`/api/wishlists?${query}`)).catch(() => null)
+  )?.data;
+
+  console.log({ result });
+  return result;
+};
+
+export const removeFromWishListAPI = async (id: string) => {
+  const result = await axios.delete(createUrl(`/api/wishlists/${id}`));
+  if (!result) {
+    console.log("cannot delete");
+  }
+  return result;
 };

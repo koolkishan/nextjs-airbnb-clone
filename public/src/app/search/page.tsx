@@ -1,12 +1,16 @@
 "use client";
 import AuthModal from "airbnb/components/auth/AuthModal";
 import CompactFooter from "airbnb/components/footer/CompactFooter";
-import Navbar from "airbnb/components/navbar/Navbar";
+const Navbar = dynamic(() => import("airbnb/components/navbar/Navbar"), {
+  ssr: false,
+});
+
 import { userAppStore } from "airbnb/store/store";
 import React, { useEffect } from "react";
 import SearchMap from "./components/SearchMap";
 import { getSearchListing } from "airbnb/lib/lisitng";
 import ListingCard from "airbnb/components/listingCard";
+import dynamic from "next/dynamic";
 
 export default function Page() {
   const { isAuthModalOpen, searchLocation, setSearchListings, searchListings } =

@@ -1,7 +1,10 @@
 "use client";
 import AuthModal from "airbnb/components/auth/AuthModal";
 import CompactFooter from "airbnb/components/footer/CompactFooter";
-import Navbar from "airbnb/components/navbar/Navbar";
+const Navbar = dynamic(() => import("airbnb/components/navbar/Navbar"), {
+  ssr: false,
+});
+
 import { userAppStore } from "airbnb/store/store";
 import React, { useEffect } from "react";
 import ListingPhotos from "./components/ListingPhotos";
@@ -9,6 +12,7 @@ import TripScheduler from "./components/TripScheduler";
 import ListingAmenties from "./components/ListingAmenties";
 import ListingMap from "./components/ListingMap";
 import { getListing } from "airbnb/lib/lisitng";
+import dynamic from "next/dynamic";
 
 export default function Page({
   params: { listing },

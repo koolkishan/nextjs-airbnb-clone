@@ -14,13 +14,20 @@ import StepOneStarter from "airbnb/components/process/StepOneStarter";
 import StepThreeStarter from "airbnb/components/process/StepThreeStarter";
 import StepTwoStarter from "airbnb/components/process/StepTwoStarter";
 import Title from "airbnb/components/process/Title";
+import { userAppStore } from "airbnb/store/store";
 import AirBnbLogoShort from "airbnb/svg/airbnb-logo-short";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Page() {
   const router = useRouter();
   const [step, setStep] = useState(0);
+
+  const { resetNewListingData } = userAppStore();
+
+  useEffect(() => {
+    resetNewListingData();
+  }, [resetNewListingData]);
 
   const handleNext = () => {
     setStep(step + 1);
@@ -80,37 +87,37 @@ function Page() {
         )}
       </header>
       <div>{getComponent()}</div>
-      {step <= 13 && (
-        <footer
-          className={`flex ${
-            step > 0 ? "justify-between" : "justify-end"
-          } items-center px-20 pb-4  border-t-4 border-t-gray-300 `}
-        >
-          {step >= 1 && (
-            <button
-              className=" py-3 mt-5  px-10 text-airbnb-light-black underline hover:bg-gray-200 text-base font-medium rounded-md cursor-pointer"
-              onClick={handlePrevious}
-            >
-              Back
-            </button>
-          )}
-          {step !== 0 ? (
-            <button
-              className="bg-[#222222] py-3 mt-5  px-10 text-white text-base font-medium rounded-md cursor-pointer"
-              onClick={handleNext}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              className="bg-airbnb-gradient py-3 mt-5  px-5 text-white text-base font-medium rounded-md cursor-pointer"
-              onClick={handleNext}
-            >
-              Get Started
-            </button>
-          )}
-        </footer>
-      )}
+      {/* {step <= 13 && ( */}
+      <footer
+        className={`flex ${
+          step > 0 ? "justify-between" : "justify-end"
+        } items-center px-20 pb-4  border-t-4 border-t-gray-300 `}
+      >
+        {step >= 1 && (
+          <button
+            className=" py-3 mt-5  px-10 text-airbnb-light-black underline hover:bg-gray-200 text-base font-medium rounded-md cursor-pointer"
+            onClick={handlePrevious}
+          >
+            Back
+          </button>
+        )}
+        {step !== 0 ? (
+          <button
+            className="bg-[#222222] py-3 mt-5  px-10 text-white text-base font-medium rounded-md cursor-pointer"
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            className="bg-airbnb-gradient py-3 mt-5  px-5 text-white text-base font-medium rounded-md cursor-pointer"
+            onClick={handleNext}
+          >
+            Get Started
+          </button>
+        )}
+      </footer>
+      {/* )} */}
     </div>
   );
 }

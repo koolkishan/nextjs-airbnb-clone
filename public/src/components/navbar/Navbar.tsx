@@ -149,9 +149,9 @@ function Navbar() {
               <RxHamburgerMenu className="text-lg" />
               <span>
                 {userInfo ? (
-                  <div className="flex justify-center items-center bg-black text-white h-7 w-7 text-sm rounded-full">
+                  <span className="flex justify-center items-center bg-black text-white h-7 w-7 text-sm rounded-full">
                     {userInfo?.firstName?.split("").shift()?.toUpperCase()}
-                  </div>
+                  </span>
                 ) : (
                   <Image
                     src="/empty-profile.png"
