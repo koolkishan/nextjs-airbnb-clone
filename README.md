@@ -4,7 +4,8 @@
 # App Screenshots
 
 ## Home Page List View
-![home page](https://github.com/koolkishan/nextjs-airbnb-clone/assets/30298996/5883c09b-d079-4b52-8985-727c9e0651f7)
+
+![Airbnb-Clone](https://github.com/koolkishan/nextjs-airbnb-clone/assets/30298996/fbbaf229-c068-40c4-a65f-6cf5d32fc32a)
 
 ## Home Page Map View
 
