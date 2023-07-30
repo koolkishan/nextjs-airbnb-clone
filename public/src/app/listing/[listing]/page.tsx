@@ -23,7 +23,6 @@ export default function Page({
   useEffect(() => {
     const getData = async () => {
       const data = await getListing(listing);
-      console.log({ data });
       setCurrentListing(data);
     };
     if (listing) getData();

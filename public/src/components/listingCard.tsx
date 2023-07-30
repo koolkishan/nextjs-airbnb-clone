@@ -1,21 +1,28 @@
 "use client";
+import Image from "next/image";
+import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   addToWishList,
   deleteListingAPI,
   removeFromWishListAPI,
 } from "airbnb/lib/lisitng";
 import { userAppStore } from "airbnb/store/store";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
 import { IoMdHeart } from "react-icons/io";
+
+interface ListingCardProps {
+  data: any;
+  isMyListing?: boolean | undefined;
+  isWishList?: boolean | undefined;
+  wishListId?: undefined;
+}
 
 export default function ListingCard({
   data,
   isMyListing = false,
   isWishList = false,
   wishListId = undefined,
-}: any) {
+}: ListingCardProps) {
   const {
     removeUserListing,
     userInfo,
@@ -39,7 +46,6 @@ export default function ListingCard({
 
   const removeWishlist = async () => {
     // const id = wishLists.find((list) => console.log(list));
-    // console.log({ id });
     // await removeFromWishListAPI(id.id);
   };
 
@@ -59,11 +65,9 @@ export default function ListingCard({
         onClick={() => router.push(`/listing/${data.id}`)}
       >
         <div className="flex flex-col gap-2">
-          <div className="relative w-80 h-72 ">
+          <div className="relative w-64 h-56 ">
             <Image
               src={data?.photos[0]}
-              // height={300}
-              // width={300}
               fill
               alt="listing"
               className="rounded-lg object-cover"
@@ -71,10 +75,11 @@ export default function ListingCard({
             {pathname === "/" && (
               <div className="absolute z-20 right-2 top-2">
                 <IoMdHeart
+                  style={{ stroke: "white", strokeWidth: "40" }}
                   className={`text-3xl ${
                     wishLists.includes(data.id)
                       ? "text-airbnb-theme-color"
-                      : "opacity-50"
+                      : "text-[#00000099]"
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();

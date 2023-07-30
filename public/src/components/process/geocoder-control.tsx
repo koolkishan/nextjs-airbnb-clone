@@ -35,7 +35,7 @@ export default function GeocoderControl(props: GeocoderControlProps) {
       ctrl.on("results", props.onResults);
       ctrl.on("result", (evt) => {
         props.onResult(evt);
-        console.log({ evt });
+
         const { result } = evt;
         const location =
           result &&

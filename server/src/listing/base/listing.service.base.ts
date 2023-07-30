@@ -34,7 +34,6 @@ export class ListingServiceBase {
   async create<T extends Prisma.ListingCreateArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingCreateArgs>
   ): Promise<Listing> {
-    console.log({ args });
     return this.prisma.listing.create<T>(args);
   }
   async update<T extends Prisma.ListingUpdateArgs>(

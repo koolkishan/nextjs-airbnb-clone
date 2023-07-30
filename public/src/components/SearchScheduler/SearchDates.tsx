@@ -8,7 +8,7 @@ export default function SearchDates() {
       key: "selection",
     },
   ]);
-  console.log({ state });
+
   function formatDate(dateString) {
     const options = { month: "long", day: "numeric" };
     const date = new Date(dateString);

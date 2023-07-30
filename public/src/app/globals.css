@@ -28,3 +28,22 @@
   text-transform: uppercase;
   outline: none;
 }
+
+.mapboxgl-popup-content {
+  width: 18rem !important;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 1rem !important;
+  margin-right: 0.2rem;
+}
+
+.mapboxgl-popup {
+  width: 18rem !important;
+}
+
+div.mapboxgl-popup.mapboxgl-popup-anchor-top {
+  width: 18rem !important;
+  max-width: 18rem !important;
+  font-size: 1rem;
+}

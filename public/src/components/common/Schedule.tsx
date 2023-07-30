@@ -64,7 +64,7 @@ export default function Schedule() {
         </label>
         <span>{formatDate(state[0]?.startDate)}</span>
         {selectionType === "check-in" && (
-          <div className="absolute top-28 left-0 shadow-xl">
+          <div className="absolute top-28 left-0 shadow-xl z-[400]">
             <Calender state={state} setState={setState} />
           </div>
         )}

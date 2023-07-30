@@ -18,11 +18,7 @@ export default function ListingPhotos() {
               className="relative w-48 h-32 cursor-pointer"
               onClick={() => setCurrentPhoto(index)}
             >
-              <Image
-                alt="listing"
-                fill
-                src={currentListing.photos[currentPhoto]}
-              />
+              <Image alt="listing" fill src={photo} />
             </li>
           ))}
         </ul>

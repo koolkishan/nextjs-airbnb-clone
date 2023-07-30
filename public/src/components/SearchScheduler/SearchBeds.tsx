@@ -32,7 +32,7 @@ export default function SearchBeds() {
       </div>
       {selectionType === "who" && (
         <div
-          className="absolute w-96 right-0 h-max top-24 shadow-lg rounded-3xl bg-white py-10 px-10"
+          className="absolute w-96 right-0 h-max top-24 shadow-lg rounded-3xl bg-white py-10 px-10 z-50"
           ref={containerRef}
         >
           <ul className="flex flex-col gap-5">

@@ -5,7 +5,6 @@ import React from "react";
 export default function ProcessAmeneties() {
   const { placeAmeneites, setPlaceAmenities } = userAppStore();
   const addAmenety = (name: string) => {
-    console.log({ name, placeAmeneites });
     setPlaceAmenities([...placeAmeneites, name]);
   };
   const removeAmenty = (name: string) => {
