@@ -14,6 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { Listing } from "../../listing/base/Listing";
+import { IsJSONValue } from "@app/custom-validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { JsonValue } from "type-fest";
 import { User } from "../../user/base/User";
 
 @ObjectType()
@@ -41,6 +44,13 @@ class Trip {
   @ValidateNested()
   @Type(() => Listing)
   listing?: Listing;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsJSONValue()
+  @Field(() => GraphQLJSON)
+  tripData!: JsonValue;
 
   @ApiProperty({
     required: true,

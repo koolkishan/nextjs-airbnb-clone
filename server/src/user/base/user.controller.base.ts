@@ -347,6 +347,7 @@ export class UserControllerBase {
           },
         },
 
+        tripData: true,
         updatedAt: true,
 
         user: {
