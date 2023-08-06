@@ -33,7 +33,7 @@ export default function Page() {
       >
         <div className=" h-[82.5vh] overflow-auto no-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-4 md:px-20 gap-16 py-10 h-[75vh] overflow-auto no-scrollbar">
-            {searchListings?.map((listing: any, index: number) => (
+            {searchListings?.map((listing, index) => (
               <ListingCard data={listing} key={index} />
             ))}
           </div>

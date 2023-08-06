@@ -6,7 +6,7 @@ export const me = async () => {
     : null;
 };
 
-export const login = async (username: string, password: string) => {
+export const login = async (username, password) => {
   const result = (
     await post(createUrl("/api/login"), { username, password }).catch(
       () => null
@@ -20,12 +20,7 @@ export const login = async (username: string, password: string) => {
   return me();
 };
 
-export const signup = async (
-  username: string,
-  password: string,
-  firstName: string,
-  lastName: string
-) => {
+export const signup = async (username, password, firstName, lastName) => {
   const result = (
     await post(createUrl("/api/signup"), {
       username,
@@ -42,7 +37,7 @@ export const signup = async (
   return me();
 };
 
-export const checkUser = async (email: string) => {
+export const checkUser = async (email) => {
   const result = (
     await post(createUrl("/api/check-user"), { email }).catch(() => null)
   )?.data;

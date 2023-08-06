@@ -3,7 +3,7 @@ import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-export default function Calender({ state, setState }: any) {
+export default function Calender({ state, setState }) {
   return (
     <div className="">
       <DateRangePicker

@@ -9,9 +9,9 @@ const TOKEN =
 
 export default function PlaceLocation() {
   const { setMapData, setLocationData } = userAppStore();
-  const getResults = ({ result }: any) => {
+  const getResults = ({ result }) => {
     const [longitude, latitude] = result?.geometry?.coordinates;
-    const data: any = {
+    const data = {
       landmark: result.text,
       neighborhood: "",
       postcode: "",
@@ -21,8 +21,8 @@ export default function PlaceLocation() {
       region: "",
       country: "",
     };
-    result?.context?.forEach((item: any) => {
-      Object.keys(data)?.forEach((key: string) => {
+    result?.context?.forEach((item) => {
+      Object.keys(data)?.forEach((key) => {
         if (item?.id?.startsWith(key + ".")) {
           data[key] = item?.text;
         }

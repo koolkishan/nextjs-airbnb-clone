@@ -5,14 +5,14 @@ import React, { useEffect, useRef } from "react";
 export default function SearchBeds() {
   const { selectionType, searchPlaceSpace, setSearchPlaceSpace } =
     userAppStore();
-  const handleIncrement = (type: string) => {
+  const handleIncrement = (type) => {
     setSearchPlaceSpace({
       ...searchPlaceSpace,
       [type]: searchPlaceSpace[type] + 1,
     });
   };
 
-  const handleDecrement = (type: string) => {
+  const handleDecrement = (type) => {
     if (searchPlaceSpace[type] > 1) {
       setSearchPlaceSpace({
         ...searchPlaceSpace,

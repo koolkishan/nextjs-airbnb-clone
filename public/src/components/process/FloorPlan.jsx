@@ -4,11 +4,11 @@ import React, { useState } from "react";
 export default function FloorPlan() {
   const { placeSpace, setPlaceSpace } = userAppStore();
 
-  const handleIncrement = (type: string) => {
+  const handleIncrement = (type) => {
     setPlaceSpace({ ...placeSpace, [type]: placeSpace[type] + 1 });
   };
 
-  const handleDecrement = (type: string) => {
+  const handleDecrement = (type) => {
     if (placeSpace[type] > 1) {
       setPlaceSpace({ ...placeSpace, [type]: placeSpace[type] - 1 });
     }

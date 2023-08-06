@@ -7,13 +7,6 @@ export default function FormInput({
   setValue,
   placeholder,
   isListing = false,
-}: {
-  name: string;
-  type: "text" | "password";
-  value: string;
-  setValue: Dispatch<SetStateAction<string>> | any;
-  placeholder: string;
-  isListing?: boolean;
 }) {
   return (
     <input

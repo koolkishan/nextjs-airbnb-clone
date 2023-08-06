@@ -29,7 +29,7 @@ export default function Page() {
       <div className="h-[82.5vh] flex justify-start items-start">
         {wishListsPage?.length > 0 ? (
           <div className="grid grid-cols-4 px-10 gap-3 py-10 h-[75vh] overflow-auto no-scrollbar w-full items-start ">
-            {wishListsPage?.map(({ listing, id }: any, index: number) => (
+            {wishListsPage?.map(({ listing, id }, index) => (
               <ListingCard
                 data={listing}
                 key={index}

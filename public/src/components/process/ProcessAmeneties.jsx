@@ -4,13 +4,11 @@ import React from "react";
 
 export default function ProcessAmeneties() {
   const { placeAmeneites, setPlaceAmenities } = userAppStore();
-  const addAmenety = (name: string) => {
+  const addAmenety = (name) => {
     setPlaceAmenities([...placeAmeneites, name]);
   };
-  const removeAmenty = (name: string) => {
-    const index = placeAmeneites.findIndex(
-      (amenetiy: string) => amenetiy === name
-    );
+  const removeAmenty = (name) => {
+    const index = placeAmeneites.findIndex((amenetiy) => amenetiy === name);
     if (index) {
       const clonedAmenties = [...placeAmeneites];
       clonedAmenties.splice(index, 1);

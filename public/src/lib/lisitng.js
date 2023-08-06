@@ -4,7 +4,7 @@ import qs from "qs";
 import axios from "axios";
 import { data } from "autoprefixer";
 
-export const createLisitngAPI = async (listingData: any) => {
+export const createLisitngAPI = async (listingData) => {
   const result = (
     await post(createUrl("/api/listings"), {
       ...listingData,
@@ -33,14 +33,14 @@ export const getAllListings = async () => {
   return result.data;
 };
 
-export const getListing = async (listingId: string) => {
+export const getListing = async (listingId) => {
   const result = await axios.get(createUrl(`/api/listings/${listingId}`));
   if (!result) {
   }
   return result.data;
 };
 
-export const getSearchListing = async (searchTerm: string) => {
+export const getSearchListing = async (searchTerm) => {
   const query = qs.stringify({
     where: {
       OR: [
@@ -117,7 +117,7 @@ export const getUserListings = async (userId) => {
   return result.data;
 };
 
-export const deleteListingAPI = async (id: string) => {
+export const deleteListingAPI = async (id) => {
   const result = await axios.delete(createUrl(`/api/listings/${id}`));
   if (!result) {
     console.log("cannot delete");
@@ -125,7 +125,7 @@ export const deleteListingAPI = async (id: string) => {
   return result;
 };
 
-export const addToWishList = async (id: string, userId: string) => {
+export const addToWishList = async (id, userId) => {
   const query = {
     listing: { id },
     user: { id: userId },
@@ -146,7 +146,7 @@ export const addToWishList = async (id: string, userId: string) => {
   return result;
 };
 
-export const getUserWishlists = async (userId: string) => {
+export const getUserWishlists = async (userId) => {
   const query = qs.stringify({
     where: {
       user: { id: userId },
@@ -163,7 +163,7 @@ export const getUserWishlists = async (userId: string) => {
   return result;
 };
 
-export const removeFromWishListAPI = async (id: string) => {
+export const removeFromWishListAPI = async (id) => {
   const result = await axios.delete(createUrl(`/api/wishlists/${id}`));
   if (!result) {
     console.log("cannot delete");

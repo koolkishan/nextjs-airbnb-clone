@@ -5,7 +5,7 @@ import { userAppStore } from "airbnb/store/store";
 
 export default function PlaceDetails() {
   const { locationData, setLocationData } = userAppStore();
-  const handleChange = (name: string, value: string) => {
+  const handleChange = (name, value) => {
     setLocationData({ ...locationData, [name]: value });
   };
 

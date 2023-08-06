@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 export default function ListingTypeSelector() {
   const { locationType, setLocationType } = userAppStore();
-  const handleSelection = (type: string) => {
+  const handleSelection = (type) => {
     setLocationType(type);
   };
 

@@ -10,19 +10,12 @@ import {
 import { userAppStore } from "airbnb/store/store";
 import { IoMdHeart } from "react-icons/io";
 
-interface ListingCardProps {
-  data: any;
-  isMyListing?: boolean | undefined;
-  isWishList?: boolean | undefined;
-  wishListId?: undefined;
-}
-
 export default function ListingCard({
   data,
   isMyListing = false,
   isWishList = false,
   wishListId = undefined,
-}: ListingCardProps) {
+}) {
   const {
     removeUserListing,
     userInfo,

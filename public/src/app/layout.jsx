@@ -12,11 +12,7 @@ export const metadata = {
   description: "Created by Kishan Sheth",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <link

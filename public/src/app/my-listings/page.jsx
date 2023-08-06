@@ -29,7 +29,7 @@ export default function Page() {
       <div className=" flex justify-start items-start">
         {userListings.length > 0 ? (
           <div className="grid grid-cols-4 px-10 gap-3 py-10   w-full items-start ">
-            {userListings?.map((listing: any, index: number) => (
+            {userListings?.map((listing, index) => (
               <ListingCard data={listing} key={index} isMyListing />
             ))}
           </div>

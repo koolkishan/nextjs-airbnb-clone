@@ -3,12 +3,12 @@ import { useEffect, RefObject, useRef } from "react";
 
 function useClickOutside(isScheduleBar = false) {
   const { setSelectionType, setShowScheduleBar } = userAppStore();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event) {
       if (
         containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        !containerRef.current.contains(event.target)
       ) {
         if (!isScheduleBar) {
           setSelectionType(undefined);

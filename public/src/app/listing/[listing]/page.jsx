@@ -14,11 +14,7 @@ import ListingMap from "./components/ListingMap";
 import { getListing } from "airbnb/lib/lisitng";
 import dynamic from "next/dynamic";
 
-export default function Page({
-  params: { listing },
-}: {
-  params: { listing: string };
-}) {
+export default function Page({ params: { listing } }) {
   const { isAuthModalOpen, currentListing, setCurrentListing } = userAppStore();
   useEffect(() => {
     const getData = async () => {
