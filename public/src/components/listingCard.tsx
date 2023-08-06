@@ -72,18 +72,18 @@ export default function ListingCard({
               alt="listing"
               className="rounded-lg object-cover"
             />
-            {pathname === "/" && (
+            {pathname === "/" && userInfo && (
               <div className="absolute z-20 right-2 top-2">
                 <IoMdHeart
                   style={{ stroke: "white", strokeWidth: "40" }}
                   className={`text-3xl ${
-                    wishLists.includes(data.id)
+                    wishLists?.includes(data.id)
                       ? "text-airbnb-theme-color"
                       : "text-[#00000099]"
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (wishLists.includes(data.id)) {
+                    if (wishLists?.includes(data.id)) {
                       removeWishlist();
                     } else addWishList();
                   }}

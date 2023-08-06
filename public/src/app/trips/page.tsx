@@ -1,13 +1,41 @@
 "use client";
 import AuthModal from "airbnb/components/auth/AuthModal";
 import CompactFooter from "airbnb/components/footer/CompactFooter";
+import { getUserTrips } from "airbnb/lib/lisitng";
+import { userAppStore } from "airbnb/store/store";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 const Navbar = dynamic(() => import("airbnb/components/navbar/Navbar"), {
   ssr: false,
 });
 
 export default function Page() {
+  const router = useRouter();
+  const { userInfo } = userAppStore();
+  const [tripData, setTripData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getUserTrips(userInfo?.id);
+      setTripData(data);
+      console.log({ data });
+    };
+    if (userInfo) {
+      getData();
+    }
+  }, []);
+
+  function checkDateStatus(inputDate) {
+    const currentDate = new Date();
+    const providedDate = new Date(inputDate);
+
+    if (providedDate < currentDate) {
+      return "Completed";
+    } else if (providedDate > currentDate) {
+      return "Upcoming";
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -34,57 +62,34 @@ export default function Page() {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b  hover:bg-gray-100 ">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+              {tripData.map((trip, index) => (
+                <tr
+                  className="bg-white border-b  hover:bg-gray-100 "
+                  key={index}
                 >
-                  Apple MacBook Pro 17"
-                </th>
-                <td className="px-6 py-4">Silver</td>
-                <td className="px-6 py-4">Laptop</td>
-                <td className="px-6 py-4">$2999</td>
-                <td className="px-6 py-4">
-                  <span className="bg-airbnb-theme-color text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                    Upcoming
-                  </span>
-                </td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">White</td>
-                <td className="px-6 py-4">Laptop PC</td>
-                <td className="px-6 py-4">$1999</td>
-                <td className="px-6 py-4 text-right">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer"
+                    onClick={() => router.push(`/listing/${trip.listing.id}`)}
                   >
-                    Edit
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  Magic Mouse 2
-                </th>
-                <td className="px-6 py-4">Black</td>
-                <td className="px-6 py-4">Accessories</td>
-                <td className="px-6 py-4">$99</td>
-                <td className="px-6 py-4 ">
-                  <span className="bg-green-500 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                    Completed
-                  </span>
-                </td>
-              </tr>
+                    {trip.listing.title}
+                  </th>
+                  <td className="px-6 py-4">{trip.tripData.startDate}</td>
+                  <td className="px-6 py-4">{trip.tripData.endDate}</td>
+                  <td className="px-6 py-4">{trip.tripData.price}</td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`${
+                        checkDateStatus(trip.tripData.startDate) === "Completed"
+                          ? "bg-green-500"
+                          : "bg-airbnb-theme-color"
+                      }  text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded`}
+                    >
+                      {checkDateStatus(trip.tripData.startDate)}
+                    </span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

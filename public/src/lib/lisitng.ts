@@ -170,3 +170,36 @@ export const removeFromWishListAPI = async (id: string) => {
   }
   return result;
 };
+
+export const addTrip = async (data) => {
+  const query = {
+    listing: {
+      id: data.listingId,
+    },
+    user: { id: data.userId },
+    tripData: data.tripData,
+  };
+  const result = await axios.post(createUrl("/api/trips"), { ...query });
+  if (!result) {
+    alert("failed");
+  } else {
+    return result;
+  }
+};
+
+export const getUserTrips = async (userId) => {
+  const query = qs.stringify({
+    where: {
+      user: { id: userId },
+    },
+    select: {
+      listing: true,
+    },
+  });
+  const result = (
+    await axios.get(createUrl(`/api/trips?${query}`)).catch(() => null)
+  )?.data;
+
+  console.log({ result });
+  return result;
+};

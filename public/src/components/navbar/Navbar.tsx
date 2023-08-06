@@ -133,12 +133,14 @@ function Navbar() {
         <div>{!showScheduleBar && <ScheduleBar />}</div>
         <div className="flex-grow basis-0 ">
           <ul className="flex items-center justify-end gap-6 font-medium">
-            <li
-              className="cursor-pointer"
-              onClick={() => router.push("new-listing")}
-            >
-              <span>Airbnb your home</span>
-            </li>
+            {userInfo && (
+              <li
+                className="cursor-pointer"
+                onClick={() => router.push("new-listing")}
+              >
+                <span>Airbnb your home</span>
+              </li>
+            )}
             <li className="cursor-pointer">
               <FiGlobe />
             </li>

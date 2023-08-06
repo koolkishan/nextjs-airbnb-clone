@@ -39,11 +39,11 @@ export default function Home() {
       const data = await getAllListings();
       setListings(data);
       const wishlists = await getUserWishlists(userInfo?.id);
-      const wishListsId = wishlists.map(({ listing }) => listing.id);
+      const wishListsId = wishlists?.map(({ listing }) => listing.id);
       setWishLists(wishListsId);
     };
     getData();
-  }, [setListings]);
+  }, [setListings, setWishLists, userInfo?.id]);
 
   return (
     <div>

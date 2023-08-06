@@ -230,12 +230,14 @@ type Trip {
   createdAt: DateTime!
   id: String!
   listing: Listing
+  tripData: JSON!
   updatedAt: DateTime!
   user: User
 }
 
 input TripCreateInput {
   listing: ListingWhereUniqueInput!
+  tripData: JSON!
   user: UserWhereUniqueInput!
 }
 
@@ -257,12 +259,14 @@ input TripOrderByInput {
   createdAt: SortOrder
   id: SortOrder
   listingId: SortOrder
+  tripData: SortOrder
   updatedAt: SortOrder
   userId: SortOrder
 }
 
 input TripUpdateInput {
   listing: ListingWhereUniqueInput
+  tripData: JSON
   user: UserWhereUniqueInput
 }
 
@@ -281,6 +285,7 @@ input TripUpdateManyWithoutUsersInput {
 input TripWhereInput {
   id: StringFilter
   listing: ListingWhereUniqueInput
+  tripData: JsonFilter
   user: UserWhereUniqueInput
 }
 

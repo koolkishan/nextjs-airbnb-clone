@@ -28,7 +28,13 @@ export default function SearchBeds() {
         <label htmlFor="" className="text-xs font-semibold">
           Who
         </label>
-        <span>4 guests</span>
+        <span>
+          {searchPlaceSpace.adults +
+            searchPlaceSpace.childrens +
+            searchPlaceSpace.infants +
+            " "}
+          guests
+        </span>
       </div>
       {selectionType === "who" && (
         <div
