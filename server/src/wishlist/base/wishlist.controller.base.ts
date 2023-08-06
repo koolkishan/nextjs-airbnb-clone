@@ -103,9 +103,6 @@ export class WishlistControllerBase {
         listing: {
           select: {
             id: true,
-            price: true,
-            title: true,
-            photos: true,
           },
         },
 

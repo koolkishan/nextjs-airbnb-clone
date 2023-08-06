@@ -34,16 +34,13 @@ import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
 import { Wishlist } from "../../wishlist/base/Wishlist";
 import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ListingControllerBase {
   constructor(
     protected readonly service: ListingService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Listing })
@@ -89,18 +86,18 @@ export class ListingControllerBase {
     });
   }
 
-  // @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Listing] })
   @ApiNestedQuery(ListingFindManyArgs)
-  // @nestAccessControl.UseRoles({
-  //   resource: "Listing",
-  //   action: "read",
-  //   possession: "any",
-  // })
-  // @swagger.ApiForbiddenResponse({
-  //   type: errors.ForbiddenException,
-  // })
+  @nestAccessControl.UseRoles({
+    resource: "Listing",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Listing[]> {
     const args = plainToClass(ListingFindManyArgs, request.query);
     return this.service.findMany({
@@ -130,15 +127,15 @@ export class ListingControllerBase {
     });
   }
 
-  // @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Listing })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  // @nestAccessControl.UseRoles({
-  //   resource: "Listing",
-  //   action: "read",
-  //   possession: "own",
-  // })
+  @nestAccessControl.UseRoles({
+    resource: "Listing",
+    action: "read",
+    possession: "own",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -155,8 +152,6 @@ export class ListingControllerBase {
         listingCreatedBy: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
           },
         },
 
@@ -192,11 +187,6 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   async update(
     @common.Param() params: ListingWhereUniqueInput,
     @common.Body() data: ListingUpdateInput
@@ -255,11 +245,6 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @swagger.ApiBearerAuth()
   async delete(
     @common.Param() params: ListingWhereUniqueInput
   ): Promise<Listing | null> {
@@ -324,6 +309,7 @@ export class ListingControllerBase {
           },
         },
 
+        tripData: true,
         updatedAt: true,
 
         user: {
