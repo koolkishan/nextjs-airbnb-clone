@@ -35,7 +35,7 @@ export default function MapView() {
 
   return (
     <div
-      className="h-[82.5vh] w-[100vw]
+      className="h-[72.5vh] max-w-[100vw] pt-2
     "
     >
       <Map

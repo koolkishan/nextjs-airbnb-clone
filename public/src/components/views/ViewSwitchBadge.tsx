@@ -8,7 +8,7 @@ function ViewSwitchBadge() {
   const { isMapView, setMapView } = userAppStore();
 
   return (
-    <div className="fixed flex justify-center items-center bottom-28 left-0 right-0 cursor-pointer">
+    <div className="fixed flex justify-center items-center bottom-16 left-0 right-0 cursor-pointer">
       <div className=" bg-black px-4 py-4 text-white  rounded-full ">
         <span
           className="flex items-center gap-2 text-sm"

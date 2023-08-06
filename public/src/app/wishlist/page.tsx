@@ -43,9 +43,8 @@ export default function Page() {
             <h1>No Wishlists for current user. Add new Wishlists.</h1>
           </div>
         )}
-        <CompactFooter />
-        {isAuthModalOpen && <AuthModal />}
       </div>
+      <CompactFooter />
     </div>
   );
 }

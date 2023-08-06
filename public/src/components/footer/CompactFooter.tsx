@@ -12,7 +12,7 @@ export default function CompactFooter() {
     "destinations",
   ];
   return (
-    <div className="fixed bottom-0 px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm z-50 bg-white">
+    <div className=" px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm z-50 bg-white items-center">
       <ul className="flex gap-3 font-normal ">
         <li>&copy; {new Date().getFullYear()} Airbnb, Inc</li>
         {links.map((link) => (

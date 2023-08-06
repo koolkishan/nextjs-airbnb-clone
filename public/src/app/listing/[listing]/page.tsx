@@ -30,10 +30,10 @@ export default function Page({
   return (
     <div>
       {currentListing && (
-        <div className="pb-20">
+        <div className="">
           <Navbar />
           <div
-            className="h-[80vh] overflow-auto no-scrollbar px-20 pt-10 text-airbnb-light-black grid gap-10"
+            className="px-20 pt-10 text-airbnb-light-black grid gap-10"
             style={{ gridTemplateColumns: "70fr 30fr" }}
           >
             <div className="flex flex-col gap-5">
